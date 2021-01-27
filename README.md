@@ -1,6 +1,8 @@
 # From Nand to Tetris
 Demystifying what is going under the hood of CPU, Virtual Machines, etc.
 
+project 7 : build Hack virtual machine translator
+
 course homepage : https://www.nand2tetris.org/
 
 Alan Turing:
