@@ -1,4 +1,4 @@
-* From Nand to Tetris
+# From Nand to Tetris
 Demystifying what is going under the hood of CPU, Virtual Machines, etc.
 
 course homepage : https://www.nand2tetris.org/
