@@ -1,0 +1,37 @@
+
+;; for (i=0; i<256;i++){
+;;   draw 512 black pixels at the
+;;   beginnning of row i
+;;   }
+
+  screen_addr = SCREEN
+  kbd_addr = KBD
+
+  n = 8192
+  i = 0
+
+BLACK_LOOP:
+  if i > n go to END
+  RAM[screen_addr] = -1 // 1111111111111111
+  i = i + 1
+  screen_addr = screen_addr + i
+  goto BLACK_LOOP
+
+WHITE_LOOP:
+  if i > n go to END
+  RAM[screen_addr] = 0 // 1111111111111111
+  i = i + 1
+  screen_addr = screen_addr + i
+  goto WHITE_LOOP
+
+
+
+
+END:
+  // reinitialize i, screen_addr for reuse
+  i = 0
+  screen_addr = SCREEN
+
+
+  if kbd_addr == 0 goto WHITE_LOOP
+  else goto BLACK_LOOP
