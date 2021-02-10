@@ -7,9 +7,9 @@ if __name__ == '__main__':
   # asm_file = os.path.splitext(vm_file)[0] + '.asm'
   # lines = VMParser(sys.argv[1]).get_commands()
 
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Sys.vm'
-  # # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.asm'
+  vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Sys.vm'
+  # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
+  asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.asm'
 
   # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
   # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.asm'
@@ -19,16 +19,16 @@ if __name__ == '__main__':
   # temp = Path(asm_file).parent
   # print(str(temp))
 
-  vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Sys.vm'
-  vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class1.vm'
-  vm_file3 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class2.vm'
-  asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.asm'
+  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Sys.vm'
+  # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class1.vm'
+  # vm_file3 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class2.vm'
+  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.asm'
 
 # Returns a Pathlib object
 
   lines = VMParser(vm_file).get_commands()
-  lines.extend(VMParser(vm_file2).get_commands())
-  lines.extend(VMParser(vm_file3).get_commands())
+  # lines.extend(VMParser(vm_file2).get_commands())
+  # lines.extend(VMParser(vm_file3).get_commands())
   CodeWriter(asm_file, lines)
 
   # print(lines)
