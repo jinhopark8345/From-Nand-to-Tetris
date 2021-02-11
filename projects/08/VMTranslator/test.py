@@ -38,17 +38,13 @@ def run_test():
   ]
 
   import subprocess
-  # output = subprocess.call(["cmd", "--thing", "foo", "--stuff", "bar", "-a", "b", "input", "output"])
-  # list_files = subprocess.run(["ls", "-l"], stdout=subprocess.DEVNULL)
-  # result = subprocess.run([sys.executable, "-c", "print('ocean')"])
 
   cnt = 0
-  # for i in range(len(test_list)):
-  for i in range(5, 6):
+  # for i in range(0, 1):
+  for i in range(len(test_list)):
     print()
     dirorfile = test_list[i][0]
     test_path = test_list[i][1]
-
     print("dirorfile: ", dirorfile)
     print("test_path: ", test_path)
 
@@ -60,19 +56,7 @@ def run_test():
 
     print('\n'.join([output_line.decode('ascii') for output_line in output.stdout.split(b'\n')]))
 
-    # output = subprocess.run([
-    #     "/home/jinho/Projects/FromNandToTetris/tools/CPUEmulator.sh", test_path
-    # ],
-    #                         capture_output=True)
-    # print('\n'.join([output_line.decode('ascii') for output_line in output.stdout.split(b'\n')]))
-
-    subprocess.run([
-        "/home/jinho/Projects/FromNandToTetris/tools/CPUEmulator.sh", test_path
-    ])
-
-    # print(output_msg)
-    # print("dirorfile: ", dirorfile)
-    # print("test_path: ", test_path)
+    subprocess.run(["/home/jinho/Projects/FromNandToTetris/tools/CPUEmulator.sh", test_path])
 
 
 run_test()

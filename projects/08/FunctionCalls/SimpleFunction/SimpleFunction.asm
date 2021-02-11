@@ -1,3 +1,7 @@
+@256
+D=A
+@0
+M=D
 (SimpleFunction.test)
 @0
 D=A

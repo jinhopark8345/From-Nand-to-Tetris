@@ -64,10 +64,10 @@ class CodeWriter:
   def init_code_writer(self):
 
     # self.assem_lines.append('@261')
-    # self.assem_lines.append('@256')
-    # self.assem_lines.append('D=A')
-    # self.assem_lines.append('@0')
-    # self.assem_lines.append('M=D')
+    self.assem_lines.append('@256')
+    self.assem_lines.append('D=A')
+    self.assem_lines.append('@0')
+    self.assem_lines.append('M=D')
 
     # self.assem_lines.append('@300')
     # self.assem_lines.append('D=A')
@@ -288,26 +288,10 @@ class CodeWriter:
     self.assem_lines.extend(assem_push)
 
     # push LCL, ARG, THIS, THAT
-    # for i in range(1, 5):
-    #   self.assem_lines.append('@{}'.format(i))
-    #   self.assem_lines.append('D=M')
-    #   self.assem_lines.extend(assem_push)
-
-    self.assem_lines.append('@LCL')
-    self.assem_lines.append('D=M')
-    self.assem_lines.extend(assem_push)
-
-    self.assem_lines.append('@ARG')
-    self.assem_lines.append('D=M')
-    self.assem_lines.extend(assem_push)
-
-    self.assem_lines.append('@THIS')
-    self.assem_lines.append('D=M')
-    self.assem_lines.extend(assem_push)
-
-    self.assem_lines.append('@THAT')
-    self.assem_lines.append('D=M')
-    self.assem_lines.extend(assem_push)
+    for i in range(1, 5):
+      self.assem_lines.append('@{}'.format(i))
+      self.assem_lines.append('D=M')
+      self.assem_lines.extend(assem_push)
 
     # reposition ARG, ARG = SP-n-5
     self.assem_lines.append('@SP')

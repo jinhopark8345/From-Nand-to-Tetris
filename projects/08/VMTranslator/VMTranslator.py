@@ -18,12 +18,18 @@ def translate_dir(input_path, debug_flag=False):
           vm_files.append(file_path)
 
   # set asm file path
-  p_path = Path(vm_files[0]).parent
-  pp_path = p_path.parent
+  # os.path.splitext(input_path)[0].split(sep='/')[-1]
+  # p_path = Path(vm_files[0]).parent
+  # pp_path = p_path.parent
 
-  f_name = str(p_path)[len(str(pp_path)) + 1:]  # f_name is wrong
-  file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
-  asm_file_path = str(p_path) + '/' + file_name
+  # f_name = str(p_path)[len(str(pp_path)) + 1:]  # f_name is wrong
+  # file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
+  # asm_file_path = str(p_path) + '/' + file_name
+  # print(f'asm_file path: {asm_file_path}')
+
+  p_path = str(Path(vm_files[0]).parent)
+  asm_file_name = p_path.split(sep='/')[-1] + '.asm'
+  asm_file_path = p_path + '/' + asm_file_name
   print(f'asm_file path: {asm_file_path}')
 
   # empty the file first
@@ -34,8 +40,12 @@ def translate_dir(input_path, debug_flag=False):
   debug_lines = []
   call_cnt = 0
 
-  for vm_file in vm_files:
-    vm_lines = VMParser(vm_file).get_commands()
+  for idx, vm_file in enumerate(vm_files):
+    vm_lines = []
+    if idx == 0:
+      vm_lines.append(['call', 'Sys.init', 0])
+
+    vm_lines.extend(VMParser(vm_file).get_commands())
     temp_name = os.path.splitext(vm_file)[0].split(sep='/')[-1]
     cw = CodeWriter(
         temp_name, asm_file_path, vm_lines, num_call=call_cnt, operation='a', debug=debug_flag
@@ -64,7 +74,18 @@ def translate_file(input_path, debug_flag=False):
   asm_file_name = p_path.split(sep='/')[-1] + '.asm'
   asm_file_path = p_path + '/' + asm_file_name
 
-  vm_lines = VMParser(input_path).get_commands()
+  vm_lines = list()
+  vm_lines.extend(VMParser(input_path).get_commands())
+
+  is_sys = False
+  for vm_line in vm_lines:
+    if vm_line[0] == 'function' and vm_line[1] == "Sys.init":
+      is_sys = True
+      break
+  # print(is_sys)
+  # print("is_sys: {}".format(is_sys))
+  if is_sys:
+    vm_lines.insert(0, ['call', 'Sys.init', 0])
   file = open(asm_file_path, "w")
   file.close()
   temp_name = os.path.splitext(input_path)[0].split(sep='/')[-1]
