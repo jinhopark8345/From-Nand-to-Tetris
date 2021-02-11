@@ -11,16 +11,17 @@ class CodeWriter:
   """
 
   """
-  def __init__(self, input_file, output_file, lines, operation='w'):
+  def __init__(self, input_file, output_file, lines, num_call, operation='a', debug=False):
 
-    self.debug = False
+    self.debug = debug
     self.input_file = input_file
     print(f'current input file name: {self.input_file}')
     self.output_file = output_file
+    self.debug_lines = list()
     self.lines = lines
     self.if_count = 0
     self.line_count = 0
-    self.return_count = 0
+    self.return_count = num_call
     self.command_type = set([
         'push', 'pop', 'label', 'if-goto', 'goto', 'call', 'return', 'function'
     ])
@@ -29,10 +30,12 @@ class CodeWriter:
 
     self.f = open(self.output_file, operation)
     # self.ram = Ram()
-
     self.init_code_writer()
 
     self.f.close()
+  def get_debug_lines(self):
+    return self.debug_lines
+
 
   def write_line(self, line):
     if self.debug is True:
@@ -96,14 +99,18 @@ class CodeWriter:
       # self.line_count += 1
 
       last_ass_line_num = len(self.assem_lines)
-      label_cnt = len([line for line in self.assem_lines if line[0].startswith('(')])
       # print(f'label_cnt: {label_cnt}')
       self.write_line(line)
       cur_ass_line_num = len(self.assem_lines)
 
-      if self.debug is True:
-        for i in range(last_ass_line_num, cur_ass_line_num):
-          print('lcnt: {}\t{}'.format(i - label_cnt, self.assem_lines[i]))
+
+      self.debug_lines.append(line)
+      self.debug_lines.extend(self.assem_lines[last_ass_line_num:cur_ass_line_num])
+
+      # label_cnt = len([line for line in self.assem_lines if line[0].startswith('(')])
+      # if self.debug is True:
+      #   for i in range(last_ass_line_num, cur_ass_line_num):
+      #     print('lcnt: {}\t{}'.format(i - label_cnt, self.assem_lines[i]))
       # print('\n'.join(self.assem_lines[last_ass_line_num:cur_ass_line_num]))
 
     # self.assem_lines.append('(INFINITE_LOOP)')
@@ -112,6 +119,7 @@ class CodeWriter:
 
     for ass_line in self.assem_lines:
       self.f.writelines(ass_line + '\n')
+
       # self.vm_debugger()
   def save_label(self, line):
     self.assem_lines.append(f'({line[1]})')
@@ -519,121 +527,5 @@ class CodeWriter:
     for ass_line in assem_lines:
       self.f.writelines(ass_line + '\n')
 
-    # print(assem_lines)
-
-  def test_basic_test(self):
-    assert self.ram[256] == 472
-    assert self.ram[257] == 510
-    assert self.ram[258] == 36
-    assert self.ram.sp_addr == 257
-
-    assert self.ram[300] == 10
-
-    assert self.ram[401] == 21
-    assert self.ram[402] == 22
-    assert self.ram[3006] == 36
-    assert self.ram[3012] == 42
-    assert self.ram[3015] == 45
-
-  def test_pointer_test(self):
-
-    assert self.ram[256] == 6084
-    assert self.ram[257] == 46
-    assert self.ram.sp_addr == 257
-
-    assert self.ram[3] == 3030
-    assert self.ram[4] == 3040
-
-    assert self.ram[3030 + 2] == 32
-    assert self.ram[3040 + 6] == 46
-
-  def test_static_test(self):
-    assert self.ram[256] == 1110
-    assert self.ram[257] == 888
-    assert self.ram[258] == 888
-    assert self.ram.sp_addr == 257
-
-    assert self.ram[17] == 111
-    assert self.ram[19] == 333
-    assert self.ram[24] == 888
 
 
-if __name__ == '__main__':
-  # vm_file = sys.argv[1]
-  # asm_file = os.path.splitext(vm_file)[0] + '.asm'
-  # lines = VMParser(sys.argv[1]).get_commands()
-
-  import os
-  from pathlib import Path
-
-  # single file test
-  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm'
-  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm'
-  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
-  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
-
-  # dir test
-  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement'
-  input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest'
-  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction'
-
-  extension = ".vm"
-  if os.path.isdir(input_path):
-    print("\tinput is a dir")
-
-    # make vm_files list
-    vm_files = list()
-    for subdir, dirs, files in os.walk(input_path):
-      for file in files:
-        if file.endswith(extension):
-
-          file_path = input_path + '/' + str(file)
-          if file == 'Sys.vm':
-            vm_files.insert(0, file_path)
-          else:
-            vm_files.append(file_path)
-
-    # set asm file path
-    p_path = Path(vm_files[0]).parent
-    pp_path = p_path.parent
-
-    f_name = str(p_path)[len(str(pp_path)) + 1:] # f_name is wrong
-    file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
-    asm_file_path = str(p_path) + '/' + file_name
-    print(f'asm_file path: {asm_file_path}')
-
-    vm_lines = list()
-
-    # empty the file first
-    file = open(asm_file_path, "w")
-    file.close()
-
-    # append assembly code file by file
-    for vm_file in vm_files:
-      vm_lines = VMParser(vm_file).get_commands()
-      temp_name = os.path.splitext(vm_file)[0].split(sep='/')[-1]
-      CodeWriter(temp_name, asm_file_path, vm_lines, operation='a')
-
-  elif os.path.isfile(input_path):
-    print("\tinput is a file")
-    vm_file = input_path
-    p_path = Path(vm_file).parent
-    pp_path = p_path.parent
-    f_name = str(p_path)[len(str(pp_path)) + 1:] # f_name is wrong
-    print("f_name ", f_name)
-
-    file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
-    asm_file_path = str(p_path) + '/' + file_name
-    # print(asm_file_path)
-
-    lines = VMParser(input_path).get_commands()
-    # lines.extend(VMParser(vm_file2).get_commands())
-    # for l in lines:
-    #   print(l)
-    # # lines.extend(VMParser(vm_file3).get_commands())
-    temp_name = os.path.splitext(vm_file)[0].split(sep='/')[-1]
-    CodeWriter(temp_name, asm_file_path, vm_lines, operation='a')
-
-
-  else:
-    print("Not a file or dir")
