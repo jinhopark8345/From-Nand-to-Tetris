@@ -2141,7 +2141,7 @@ Well, we have to strike a ~balance~ between two conflicting objectives. On the o
 #+ATTR_ORG: :width 750
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#7-_virtual_machine_overview/2021-01-04_18-41-41_screenshot.png]]
-*** arithmetic / logical commands
+*** arithmetic commands
 
 #+DOWNLOADED: screenshot @ 2021-01-04 18:42:33
 #+ATTR_ORG: :width 600

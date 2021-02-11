@@ -1,8 +1,6 @@
 """ CodeWriter
 writes the assembly code that implements the parsed command"""
 
-# from ram import Ram
-
 from vm_parser import VMParser
 from pathlib import Path
 
@@ -33,9 +31,9 @@ class CodeWriter:
     self.init_code_writer()
 
     self.f.close()
+
   def get_debug_lines(self):
     return self.debug_lines
-
 
   def write_line(self, line):
     if self.debug is True:
@@ -63,35 +61,10 @@ class CodeWriter:
 
   def init_code_writer(self):
 
-    # self.assem_lines.append('@261')
     self.assem_lines.append('@256')
     self.assem_lines.append('D=A')
     self.assem_lines.append('@0')
     self.assem_lines.append('M=D')
-
-    # self.assem_lines.append('@300')
-    # self.assem_lines.append('D=A')
-    # self.assem_lines.append('@1')
-    # self.assem_lines.append('M=D')
-
-    # self.assem_lines.append('@400')
-    # self.assem_lines.append('D=A')
-    # self.assem_lines.append('@2')
-    # self.assem_lines.append('M=D')
-    # goto f, add vm function code
-
-    # self.assem_lines.append('@3000')
-    # self.assem_lines.append('D=A')
-    # self.assem_lines.append('@3')
-    # self.assem_lines.append('M=D')
-
-    # self.assem_lines.append('@3010')
-    # self.assem_lines.append('D=A')
-    # self.assem_lines.append('@4')
-    # self.assem_lines.append('M=D')
-
-    # for ass_line in self.assem_lines:
-    #   self.f.writelines(ass_line + '\n')
 
     for line in self.lines:
       # if self.line_count == 15:
@@ -103,24 +76,13 @@ class CodeWriter:
       self.write_line(line)
       cur_ass_line_num = len(self.assem_lines)
 
-
-      self.debug_lines.append(line)
-      self.debug_lines.extend(self.assem_lines[last_ass_line_num:cur_ass_line_num])
-
-      # label_cnt = len([line for line in self.assem_lines if line[0].startswith('(')])
-      # if self.debug is True:
-      #   for i in range(last_ass_line_num, cur_ass_line_num):
-      #     print('lcnt: {}\t{}'.format(i - label_cnt, self.assem_lines[i]))
-      # print('\n'.join(self.assem_lines[last_ass_line_num:cur_ass_line_num]))
-
-    # self.assem_lines.append('(INFINITE_LOOP)')
-    # self.assem_lines.append('@INFINITE_LOOP')
-    # self.assem_lines.append('0;JMP')
+      if self.debug:
+        self.debug_lines.append(line)
+        self.debug_lines.extend(self.assem_lines[last_ass_line_num:cur_ass_line_num])
 
     for ass_line in self.assem_lines:
       self.f.writelines(ass_line + '\n')
 
-      # self.vm_debugger()
   def save_label(self, line):
     self.assem_lines.append(f'({line[1]})')
 
@@ -327,29 +289,34 @@ class CodeWriter:
       # self.assem_lines.append('D;JGT') # troll
       self.assem_lines.append('D;JNE')  # fixed
 
+  def write_arithmetic_neg(self):
+    self.assem_lines.append('@SP')
+    self.assem_lines.append('M=M-1')
+    self.assem_lines.append('A=M')
+    self.assem_lines.append('M=-M')
+
+    # move sp pointer to the next one
+    self.assem_lines.append('@SP')
+    self.assem_lines.append('M=M+1')
+
+  def write_arithmetic_not(self):
+    self.assem_lines.append('@SP')
+    self.assem_lines.append('M=M-1')
+    self.assem_lines.append('A=M')
+    self.assem_lines.append('M=!M')
+
+    # move sp pointer to the next one
+    self.assem_lines.append('@SP')
+    self.assem_lines.append('M=M+1')
+
   def write_arithmetic(self, command):
     assem_pop = ['@SP', 'M=M-1', 'A=M', 'D=M']
 
-    # ned, not
     if command == 'neg':
-      self.assem_lines.append('@SP')
-      self.assem_lines.append('M=M-1')
-      self.assem_lines.append('A=M')
-      self.assem_lines.append('M=-M')
-
-      # move sp pointer to the next one
-      self.assem_lines.append('@SP')
-      self.assem_lines.append('M=M+1')
+      self.write_arithmetic_neg()
 
     elif command == 'not':
-      self.assem_lines.append('@SP')
-      self.assem_lines.append('M=M-1')
-      self.assem_lines.append('A=M')
-      self.assem_lines.append('M=!M')
-
-      # move sp pointer to the next one
-      self.assem_lines.append('@SP')
-      self.assem_lines.append('M=M+1')
+      self.write_arithmetic_not()
 
     # add, sub
     elif command in ['add', 'sub']:
@@ -445,7 +412,7 @@ class CodeWriter:
         if seg == 'static':
           # self.assem_lines.append('@{}'.format(16 + idx)) # wrong
           temp_str = '@{}.{}'.format(self.input_file, idx)
-          print("temp_str :",temp_str)
+          print("temp_str :", temp_str)
           self.assem_lines.append('@{}.{}'.format(self.input_file, idx))
         elif seg == 'temp':
           self.assem_lines.append('@{}'.format(5 + idx))
@@ -510,6 +477,3 @@ class CodeWriter:
 
     for ass_line in assem_lines:
       self.f.writelines(ass_line + '\n')
-
-
-
