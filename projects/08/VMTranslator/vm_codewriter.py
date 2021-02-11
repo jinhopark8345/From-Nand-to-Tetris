@@ -13,6 +13,7 @@ class CodeWriter:
   """
   def __init__(self, input_file, output_file, lines, operation='w'):
 
+    self.debug = False
     self.input_file = input_file
     print(f'current input file name: {self.input_file}')
     self.output_file = output_file
@@ -34,7 +35,9 @@ class CodeWriter:
     self.f.close()
 
   def write_line(self, line):
-    print("\t\t<current line: {}>".format(line))
+    if self.debug is True:
+      print("\t\t<current line: {}>".format(line))
+
     command_type = line[0]
     if command_type in self.command_type:
       if command_type in ('push', 'pop'):
@@ -98,8 +101,9 @@ class CodeWriter:
       self.write_line(line)
       cur_ass_line_num = len(self.assem_lines)
 
-      for i in range(last_ass_line_num, cur_ass_line_num):
-        print('lcnt: {}\t{}'.format(i - label_cnt, self.assem_lines[i]))
+      if self.debug is True:
+        for i in range(last_ass_line_num, cur_ass_line_num):
+          print('lcnt: {}\t{}'.format(i - label_cnt, self.assem_lines[i]))
       # print('\n'.join(self.assem_lines[last_ass_line_num:cur_ass_line_num]))
 
     # self.assem_lines.append('(INFINITE_LOOP)')
@@ -448,6 +452,8 @@ class CodeWriter:
       elif seg in ['static', 'temp', 'pointer']:
         if seg == 'static':
           # self.assem_lines.append('@{}'.format(16 + idx)) # wrong
+          temp_str = '@{}.{}'.format(self.input_file, idx)
+          print("temp_str :",temp_str)
           self.assem_lines.append('@{}.{}'.format(self.input_file, idx))
         elif seg == 'temp':
           self.assem_lines.append('@{}'.format(5 + idx))
@@ -591,7 +597,7 @@ if __name__ == '__main__':
     p_path = Path(vm_files[0]).parent
     pp_path = p_path.parent
 
-    f_name = str(p_path)[len(str(pp_path)) + 1:]
+    f_name = str(p_path)[len(str(pp_path)) + 1:] # f_name is wrong
     file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
     asm_file_path = str(p_path) + '/' + file_name
     print(f'asm_file path: {asm_file_path}')
@@ -604,17 +610,16 @@ if __name__ == '__main__':
 
     # append assembly code file by file
     for vm_file in vm_files:
-      vm_lines.extend(VMParser(vm_file).get_commands())
-    CodeWriter(f_name, asm_file_path, vm_lines, operation='a')
-    # print(vm_files)
-    # print('\n'.join(vm_files))
+      vm_lines = VMParser(vm_file).get_commands()
+      temp_name = os.path.splitext(vm_file)[0].split(sep='/')[-1]
+      CodeWriter(temp_name, asm_file_path, vm_lines, operation='a')
 
   elif os.path.isfile(input_path):
     print("\tinput is a file")
     vm_file = input_path
     p_path = Path(vm_file).parent
     pp_path = p_path.parent
-    f_name = str(p_path)[len(str(pp_path)) + 1:]
+    f_name = str(p_path)[len(str(pp_path)) + 1:] # f_name is wrong
     print("f_name ", f_name)
 
     file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
@@ -626,43 +631,9 @@ if __name__ == '__main__':
     # for l in lines:
     #   print(l)
     # # lines.extend(VMParser(vm_file3).get_commands())
-    CodeWriter(f_name, asm_file_path, lines)
+    temp_name = os.path.splitext(vm_file)[0].split(sep='/')[-1]
+    CodeWriter(temp_name, asm_file_path, vm_lines, operation='a')
+
 
   else:
     print("Not a file or dir")
-
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.asm'
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.asm'
-  # from pathlib import Path
-  # temp = Path(asm_file).parent
-  # print(str(temp))
-
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Sys.vm'
-  # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class1.vm'
-  # vm_file3 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class2.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.asm'
-
-# Returns a Pathlib object
-# vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Sys.vm'
-# vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
-# asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.asm'
-
-# lines = VMParser(vm_file).get_commands()
-# lines.extend(VMParser(vm_file2).get_commands())
-# for l in lines:
-#   print(l)
-
-# # lines.extend(VMParser(vm_file3).get_commands())
-# CodeWriter(asm_file, lines)
-
-# print(lines)
-# for line in lines:
-# print(line)
-
-# func_path = '{}/{}.vm'.format(str(Path(self.output_file).parent), (line[1].split(sep='.')[0]))
-# # print(func_path) # func_lines = VMParser(func_path).get_commands()
-# # print(func_lines)
-# for func_line in func_lines:
-#   self.write_line(func_line)

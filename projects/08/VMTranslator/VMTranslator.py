@@ -1,53 +1,82 @@
 import sys, os
 from vm_parser import VMParser
 from vm_codewriter import CodeWriter
+from pathlib import Path
+
+
+def translate(input_path):
+  extension = ".vm"
+  if os.path.isdir(input_path):
+    print("\tinput is a dir")
+
+    # make vm_files list
+    vm_files = list()
+    for subdir, dirs, files in os.walk(input_path):
+      for file in files:
+        if file.endswith(extension):
+
+          file_path = input_path + '/' + str(file)
+          if file == 'Sys.vm':
+            vm_files.insert(0, file_path)
+          else:
+            vm_files.append(file_path)
+
+    # set asm file path
+    p_path = Path(vm_files[0]).parent
+    pp_path = p_path.parent
+
+    f_name = str(p_path)[len(str(pp_path)) + 1:]  # f_name is wrong
+    file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
+    asm_file_path = str(p_path) + '/' + file_name
+    print(f'asm_file path: {asm_file_path}')
+
+    # empty the file first
+    file = open(asm_file_path, "w")
+    file.close()
+
+    # append assembly code file by file
+    for vm_file in vm_files:
+      vm_lines = VMParser(vm_file).get_commands()
+      temp_name = os.path.splitext(vm_file)[0].split(sep='/')[-1]
+      CodeWriter(temp_name, asm_file_path, vm_lines, operation='a')
+
+  elif os.path.isfile(input_path):
+    print("\tinput is a file")
+
+    p_path = str(Path(input_path).parent)
+    asm_file_name = p_path.split(sep='/')[-1] + '.asm'
+    asm_file_path = p_path + '/' + asm_file_name
+
+    vm_lines = VMParser(input_path).get_commands()
+    file = open(asm_file_path, "w")
+    file.close()
+    temp_name = os.path.splitext(input_path)[0].split(sep='/')[-1]
+    CodeWriter(temp_name, asm_file_path, vm_lines, operation='a')
+
+  else:
+    print("Not a file or dir")
+
+
+
 
 if __name__ == '__main__':
-  # vm_file = sys.argv[1]
+
   # asm_file = os.path.splitext(vm_file)[0] + '.asm'
   # lines = VMParser(sys.argv[1]).get_commands()
 
-  # simple function
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.asm'
+  # single file test
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
 
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.asm'
+  # dir test
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction'
 
-  vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Sys.vm'
-  vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
-  asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.asm'
+  # input_path = sys.argv[1]
+  # translate(input_path)
 
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.asm'
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.asm'
-  # from pathlib import Path
-  # temp = Path(asm_file).parent
-  # print(str(temp))
-
-  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Sys.vm'
-  # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class1.vm'
-  # vm_file3 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class2.vm'
-  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.asm'
-
-# Returns a Pathlib object
-
-  lines = VMParser(vm_file).get_commands()
-  lines.extend(VMParser(vm_file2).get_commands())
-  for l in lines:
-    print(l)
-
-  # lines.extend(VMParser(vm_file3).get_commands())
-  CodeWriter(asm_file, lines)
-
-  # print(lines)
-  # for line in lines:
-    # print(line)
-
-    # func_path = '{}/{}.vm'.format(str(Path(self.output_file).parent), (line[1].split(sep='.')[0]))
-    # # print(func_path)
-    # func_lines = VMParser(func_path).get_commands()
-    # # print(func_lines)
-    # for func_line in func_lines:
-    #   self.write_line(func_line)
+  input_path = sys.argv[1]
+  translate(input_path)
