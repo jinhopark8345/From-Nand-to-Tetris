@@ -7,8 +7,15 @@ if __name__ == '__main__':
   # asm_file = os.path.splitext(vm_file)[0] + '.asm'
   # lines = VMParser(sys.argv[1]).get_commands()
 
+  # simple function
+  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm'
+  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.asm'
+
+  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm'
+  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.asm'
+
   vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Sys.vm'
-  # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
+  vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
   asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.asm'
 
   # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
@@ -27,7 +34,10 @@ if __name__ == '__main__':
 # Returns a Pathlib object
 
   lines = VMParser(vm_file).get_commands()
-  # lines.extend(VMParser(vm_file2).get_commands())
+  lines.extend(VMParser(vm_file2).get_commands())
+  for l in lines:
+    print(l)
+
   # lines.extend(VMParser(vm_file3).get_commands())
   CodeWriter(asm_file, lines)
 

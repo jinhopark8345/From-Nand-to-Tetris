@@ -1,7 +1,3 @@
-@256
-D=A
-@0
-M=D
 @0
 D=A
 @SP
@@ -133,7 +129,7 @@ M=M-1
 A=M
 D=M
 @LOOP_START
-D;JGT
+D;JNE
 @LCL
 D=M
 @0
@@ -144,6 +140,3 @@ A=M
 M=D
 @SP
 M=M+1
-(INFINITE_LOOP)
-@INFINITE_LOOP
-0;JMP

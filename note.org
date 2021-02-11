@@ -2869,7 +2869,7 @@ responsible for removing the argument values from the stack?
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-01-29_15-48-07_screenshot.png]]
 
-*** Question
+**** Question
 Consider the global stack diagram given below, and assume
 the following pointer values:
 
@@ -2893,17 +2893,19 @@ Suppose that the currently running function is called foo. How many arguments is
 // LCL - ARG - 5 = 300 - 292 - 5(return address ~ saved THAT) = 3
 
 Suppose that foo has 4 local variables, and assume that we execute the
-command “call foo 2". What will be the value of SP following the execution of this call command? (meaning: just before the first real command of foo, after the "function foo 4" command)
+command ~“call foo 2".~ What will be the ~value of SP~ following the execution of this call command? (meaning: just before the first real command of foo, after the ~"function foo 4"~ command)
 
 - 314
 // current SP + 5(return address ~ saved THAT) + number of local variables = 305 + 5 + 4 = 314
 
-Suppose that foo has 4 local variables, and assume that we execute the command “call foo 2". What will be the value of LCL following the execution of this call command?
+Suppose that foo has 4 local variables, and assume that we execute the command ~"call foo 2"~. What will be the ~value of LCL~ following the execution of this call command?
 
 - 310
 // current SP + 5(return address ~ saved THAT) = 305 + 5 = 310
 
-Suppose that foo has 4 local variables, and assume that we execute the command “call foo 2". What will be the value of ARG following the execution of this call command?
+Suppose that foo has 4 local variables, and assume that we execute the command
+~"call foo 2".~ What will be the ~value of ARG~ following the execution of this
+call command?
 
 - 303
 // current SP - number of arguments = 305 - 2 = 303
@@ -2921,11 +2923,6 @@ Suppose that foo has 4 local variables, and assume that we execute the command �
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-01-29_16-10-42_screenshot.png]]
 
 *** Handling 'return'
-#+DOWNLOADED: screenshot @ 2021-01-29 16:11:14
-#+ATTR_ORG: :width 700
-#+ATTR_LATEX: :width 5.5in
-[[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-01-29_16-11-14_screenshot.png]]
-
 #+DOWNLOADED: screenshot @ 2021-01-29 16:16:16
 #+ATTR_ORG: :width 800
 #+ATTR_LATEX: :width 5.5in
@@ -2949,7 +2946,6 @@ last two min
 #+ATTR_ORG: :width 600
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-02-06_16-47-22_screenshot.png]]
-
 
 ** VM Implementation oh the Hack platform
 

@@ -11,8 +11,10 @@ class CodeWriter:
   """
 
   """
-  def __init__(self, output_file, lines):
+  def __init__(self, input_file, output_file, lines, operation='w'):
 
+    self.input_file = input_file
+    print(f'current input file name: {self.input_file}')
     self.output_file = output_file
     self.lines = lines
     self.if_count = 0
@@ -24,7 +26,7 @@ class CodeWriter:
     self.labels = set()
     self.assem_lines = []
 
-    self.f = open(self.output_file, 'w')
+    self.f = open(self.output_file, operation)
     # self.ram = Ram()
 
     self.init_code_writer()
@@ -46,7 +48,8 @@ class CodeWriter:
       elif command_type == 'call':
         self.write_call(line)
       elif command_type == 'return':
-        self.write_return(line)
+        # self.write_return(line)
+        self.write_return2(line)
       else:
         print(f"undefined command type {command_type}")
     else:  # arithmetic command
@@ -54,11 +57,11 @@ class CodeWriter:
 
   def init_code_writer(self):
 
+    # self.assem_lines.append('@261')
     # self.assem_lines.append('@256')
-    self.assem_lines.append('@261')
-    self.assem_lines.append('D=A')
-    self.assem_lines.append('@0')
-    self.assem_lines.append('M=D')
+    # self.assem_lines.append('D=A')
+    # self.assem_lines.append('@0')
+    # self.assem_lines.append('M=D')
 
     # self.assem_lines.append('@300')
     # self.assem_lines.append('D=A')
@@ -90,11 +93,13 @@ class CodeWriter:
       # self.line_count += 1
 
       last_ass_line_num = len(self.assem_lines)
+      label_cnt = len([line for line in self.assem_lines if line[0].startswith('(')])
+      # print(f'label_cnt: {label_cnt}')
       self.write_line(line)
       cur_ass_line_num = len(self.assem_lines)
 
       for i in range(last_ass_line_num, cur_ass_line_num):
-        print('{}\t{}'.format(i, self.assem_lines[i]))
+        print('lcnt: {}\t{}'.format(i - label_cnt, self.assem_lines[i]))
       # print('\n'.join(self.assem_lines[last_ass_line_num:cur_ass_line_num]))
 
     # self.assem_lines.append('(INFINITE_LOOP)')
@@ -114,9 +119,80 @@ class CodeWriter:
     self.assem_lines.append('({})'.format(func_name))
 
     # repeat k times: push 0
-    if nargs > 0:
-      for _ in range(nargs):
-        self.write_push_pop(['push', 'constant', 0])
+    for _ in range(nargs):
+      self.write_push_pop(['push', 'constant', 0])
+
+  def write_return2(self, _):
+    assem_pop = ['@SP', 'M=M-1', 'A=M', 'D=M']
+
+    # FRAME = LCL, *(@13) = FRAME
+    self.assem_lines.append('@LCL')
+    self.assem_lines.append('D=M')
+    self.assem_lines.append('@13')
+    self.assem_lines.append('M=D')
+
+    # RET = *(FRAME-5), *(@14) = RET
+    self.assem_lines.append('@5')
+    self.assem_lines.append('D=D-A')
+    self.assem_lines.append('A=D')
+    self.assem_lines.append('D=M')
+    self.assem_lines.append('@14')
+    self.assem_lines.append('M=D')
+
+    # *ARG = pop()
+    self.assem_lines.extend(assem_pop)
+    self.assem_lines.append('@ARG')
+    self.assem_lines.append('A=M')
+    self.assem_lines.append('M=D')  # *(@2) = pop()
+
+    # SP = ARG+1
+    self.assem_lines.append('@ARG')
+    self.assem_lines.append('D=M+1')  # D = ARG+1
+    self.assem_lines.append('@SP')
+    self.assem_lines.append('M=D')  # SP = D(=ARG+1)
+
+    # THAT = *(FRAME-1)
+    self.assem_lines.append('@13')
+    self.assem_lines.append('D=M-1')  # D = FRAME-1
+    self.assem_lines.append('A=D')  # A = FRAME-1
+    self.assem_lines.append('D=M')  # D = *(FRAME-1)
+    self.assem_lines.append('@THAT')
+    self.assem_lines.append('M=D')  # THAT = *(FRAME-1)
+
+    # THIS = *(FRAME-2)
+    self.assem_lines.append('@13')
+    self.assem_lines.append('D=M')  # D = FRAME
+    self.assem_lines.append('@2')
+    self.assem_lines.append('D=D-A')  # D = FRAME-2
+    self.assem_lines.append('A=D')  # A = FRAME-2
+    self.assem_lines.append('D=M')  # D = *(FRAME-2)
+    self.assem_lines.append('@THIS')
+    self.assem_lines.append('M=D')  # THIS = *(FRAME-2)
+
+    # ARG = *(FRAME-3)
+    self.assem_lines.append('@13')
+    self.assem_lines.append('D=M')  # D = FRAME
+    self.assem_lines.append('@3')
+    self.assem_lines.append('D=D-A')  # D = FRAME-3
+    self.assem_lines.append('A=D')  # A = FRAME-3
+    self.assem_lines.append('D=M')  # D = *(FRAME-3)
+    self.assem_lines.append('@ARG')
+    self.assem_lines.append('M=D')  # ARG = *(FRAME-3)
+
+    # LCL = *(FRAME-4)
+    self.assem_lines.append('@13')
+    self.assem_lines.append('D=M')  # D = FRAME
+    self.assem_lines.append('@4')
+    self.assem_lines.append('D=D-A')  # D = FRAME-4
+    self.assem_lines.append('A=D')  # A = FRAME-4
+    self.assem_lines.append('D=M')  # D = *(FRAME-4)
+    self.assem_lines.append('@LCL')
+    self.assem_lines.append('M=D')  # LCL = *(FRAME-4)
+
+    # goto RET
+    self.assem_lines.append('@14')
+    self.assem_lines.append('A=M')
+    self.assem_lines.append('0;JMP')
 
   def write_return(self, _):
     assem_pop = ['@SP', 'M=M-1', 'A=M', 'D=M']
@@ -200,17 +276,31 @@ class CodeWriter:
     self.assem_lines.extend(assem_push)
 
     # push LCL, ARG, THIS, THAT
-    for i in range(1, 5):
-      self.assem_lines.append('@{}'.format(i))
-      self.assem_lines.append('D=M')
-      self.assem_lines.extend(assem_push)
+    # for i in range(1, 5):
+    #   self.assem_lines.append('@{}'.format(i))
+    #   self.assem_lines.append('D=M')
+    #   self.assem_lines.extend(assem_push)
+
+    self.assem_lines.append('@LCL')
+    self.assem_lines.append('D=M')
+    self.assem_lines.extend(assem_push)
+
+    self.assem_lines.append('@ARG')
+    self.assem_lines.append('D=M')
+    self.assem_lines.extend(assem_push)
+
+    self.assem_lines.append('@THIS')
+    self.assem_lines.append('D=M')
+    self.assem_lines.extend(assem_push)
+
+    self.assem_lines.append('@THAT')
+    self.assem_lines.append('D=M')
+    self.assem_lines.extend(assem_push)
 
     # reposition ARG, ARG = SP-n-5
     self.assem_lines.append('@SP')
     self.assem_lines.append('D=M')  # D = SP
-    self.assem_lines.append('@{}'.format(nargs))
-    self.assem_lines.append('D=D-A')  # D = SP - n
-    self.assem_lines.append('@5')
+    self.assem_lines.append('@{}'.format(nargs + 5))
     self.assem_lines.append('D=D-A')  # D = SP - n - 5
     self.assem_lines.append('@ARG')
     self.assem_lines.append('M=D')  # ARG = SP - n - 5
@@ -238,7 +328,8 @@ class CodeWriter:
     else:
       self.assem_lines.extend(assem_pop)
       self.assem_lines.append(f'@{line[1]}')
-      self.assem_lines.append('D;JGT')
+      # self.assem_lines.append('D;JGT') # troll
+      self.assem_lines.append('D;JNE')  # fixed
 
   def write_arithmetic(self, command):
     assem_pop = ['@SP', 'M=M-1', 'A=M', 'D=M']
@@ -356,7 +447,8 @@ class CodeWriter:
 
       elif seg in ['static', 'temp', 'pointer']:
         if seg == 'static':
-          self.assem_lines.append('@{}'.format(16 + idx))
+          # self.assem_lines.append('@{}'.format(16 + idx)) # wrong
+          self.assem_lines.append('@{}.{}'.format(self.input_file, idx))
         elif seg == 'temp':
           self.assem_lines.append('@{}'.format(5 + idx))
         elif seg == 'pointer':
@@ -387,7 +479,8 @@ class CodeWriter:
       if seg in ['static', 'temp', 'pointer']:
         self.assem_lines.extend(assem_pop)
         if seg == 'static':
-          self.assem_lines.append('@{}'.format(16 + idx))
+          # self.assem_lines.append('@{}'.format(16 + idx))
+          self.assem_lines.append('@{}.{}'.format(self.input_file, idx))
         elif seg == 'temp':
           self.assem_lines.append('@{}'.format(5 + idx))
         elif seg == 'pointer':
@@ -460,17 +553,116 @@ class CodeWriter:
 
 
 if __name__ == '__main__':
+  # vm_file = sys.argv[1]
+  # asm_file = os.path.splitext(vm_file)[0] + '.asm'
+  # lines = VMParser(sys.argv[1]).get_commands()
 
-  vm_file = '/home/jinho/Dropbox/Projects/FromNandToTetris/projects/07/StackArithmetic/StackTest/StackTest.vm'
-  output_file = '/home/jinho/Dropbox/Projects/FromNandToTetris/projects/07/StackArithmetic/StackTest/StackTest.asm'
+  import os
+  from pathlib import Path
 
-  vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
+  # single file test
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
 
-  output_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.asm'
+  # dir test
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement'
+  input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest'
+  # input_path = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction'
 
-  vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm'
+  extension = ".vm"
+  if os.path.isdir(input_path):
+    print("\tinput is a dir")
 
-  output_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.asm'
+    # make vm_files list
+    vm_files = list()
+    for subdir, dirs, files in os.walk(input_path):
+      for file in files:
+        if file.endswith(extension):
 
-  lines = VMParser(vm_file).get_commands()
-  cw = CodeWriter(output_file, lines)
+          file_path = input_path + '/' + str(file)
+          if file == 'Sys.vm':
+            vm_files.insert(0, file_path)
+          else:
+            vm_files.append(file_path)
+
+    # set asm file path
+    p_path = Path(vm_files[0]).parent
+    pp_path = p_path.parent
+
+    f_name = str(p_path)[len(str(pp_path)) + 1:]
+    file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
+    asm_file_path = str(p_path) + '/' + file_name
+    print(f'asm_file path: {asm_file_path}')
+
+    vm_lines = list()
+
+    # empty the file first
+    file = open(asm_file_path, "w")
+    file.close()
+
+    # append assembly code file by file
+    for vm_file in vm_files:
+      vm_lines.extend(VMParser(vm_file).get_commands())
+    CodeWriter(f_name, asm_file_path, vm_lines, operation='a')
+    # print(vm_files)
+    # print('\n'.join(vm_files))
+
+  elif os.path.isfile(input_path):
+    print("\tinput is a file")
+    vm_file = input_path
+    p_path = Path(vm_file).parent
+    pp_path = p_path.parent
+    f_name = str(p_path)[len(str(pp_path)) + 1:]
+    print("f_name ", f_name)
+
+    file_name = str(p_path)[len(str(pp_path)) + 1:] + '.asm'
+    asm_file_path = str(p_path) + '/' + file_name
+    # print(asm_file_path)
+
+    lines = VMParser(input_path).get_commands()
+    # lines.extend(VMParser(vm_file2).get_commands())
+    # for l in lines:
+    #   print(l)
+    # # lines.extend(VMParser(vm_file3).get_commands())
+    CodeWriter(f_name, asm_file_path, lines)
+
+  else:
+    print("Not a file or dir")
+
+  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm'
+  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.asm'
+  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm'
+  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.asm'
+  # from pathlib import Path
+  # temp = Path(asm_file).parent
+  # print(str(temp))
+
+  # vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Sys.vm'
+  # vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class1.vm'
+  # vm_file3 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/Class2.vm'
+  # asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.asm'
+
+# Returns a Pathlib object
+# vm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Sys.vm'
+# vm_file2 = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/Main.vm'
+# asm_file = '/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.asm'
+
+# lines = VMParser(vm_file).get_commands()
+# lines.extend(VMParser(vm_file2).get_commands())
+# for l in lines:
+#   print(l)
+
+# # lines.extend(VMParser(vm_file3).get_commands())
+# CodeWriter(asm_file, lines)
+
+# print(lines)
+# for line in lines:
+# print(line)
+
+# func_path = '{}/{}.vm'.format(str(Path(self.output_file).parent), (line[1].split(sep='.')[0]))
+# # print(func_path) # func_lines = VMParser(func_path).get_commands()
+# # print(func_lines)
+# for func_line in func_lines:
+#   self.write_line(func_line)

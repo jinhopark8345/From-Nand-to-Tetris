@@ -7,7 +7,7 @@ import re
 class VMParser:
   def __init__(self, input_vm_file):
     self.lines = []
-    print("input file name: {}".format(input_vm_file))
+    print("VMParser: input file name: {}".format(input_vm_file))
     f = open(input_vm_file, 'r')
 
     while True:
