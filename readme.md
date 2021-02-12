@@ -3,10 +3,10 @@ Demystifying what is going under the hood of CPU, Virtual Machines, etc.
 
 ### project 7,8 : Hack virtual machine code to Hack assembly translator
 * features
-** stack arithmetic
-** memory access commands
-** program flow
-** function calling commands
+    * stack arithmetic
+    * memory access commands
+    * program flow
+    * function calling commands
 
 course homepage : https://www.nand2tetris.org/
 
