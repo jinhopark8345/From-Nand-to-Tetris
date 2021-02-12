@@ -2,6 +2,7 @@
 Demystifying what is going under the hood of CPU, Virtual Machines, etc.
 
 ### project 7,8 : Hack virtual machine code to Hack assembly translator
+Language: Python 3.8.5  
 * features
     * stack arithmetic
     * memory access commands
