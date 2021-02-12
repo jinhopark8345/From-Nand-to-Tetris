@@ -1983,7 +1983,7 @@ Well, ~Nand to Tetris sheds light on all these questions,. And as you'll get thi
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/course_overview/2021-01-03_09-48-54_screenshot.png]]
 
-* Module#7- Virtual Machine 1: Stack arithmetic
+* Module#7 - Virtual Machine 1: Stack arithmetic
 In some modern languages, most notably Java, the high-level code is not translated directly into machine language. Rather, Java compilers translate the high-level source code into code written in an intermediate language, designed to operate on some abstract processing layer known as a virtual machine.
 
 In this module we begin building a ~stack-based virtual machine~. After presenting the virtual machine architecture and its VM language (which is similar to Java's bytecode), we develop a basic VM translator (similar to Java's JVM), designed to translate VM programs into the Hack machine language. In the next module we'll extend this basic translator into a full-scale VM implementation. This implementation, in turn, will serve as the backend module of the two-tier compiler that we'll develop later in the course.
@@ -2580,7 +2580,7 @@ Obviously, this is a very serious oversight. Because you see, you have to realiz
 So in reality, developers of VM Translator work very hard to generate low level code which is a tight and efficient as possible. And that's something that, up until now, in non-tertiary spot, too, we've completely ignored.
 Also, I would like to point out that the stake architecture that we use so carefully in this course, is not really a necessary ingredient of a virtual machine. For example, the JVM which is installed these days on Android devices, uses another abstract architecture which is called register machine. This register machine is perhaps less elegant than the beautiful than our own stack architecture, but arguably, it generates code which is better optimized for processors of mobile devices. You see, when it comes to efficiency, developers of mission critical software layers are very opportunistic and they use anything that works better and faster. So we can go on and on with these questions and discussions and there's no one around here to tell me to shut up. So I'm going to force myself to stop and we'll meet again in the next module in which we'll continue to develop our VM obstruction and implementation and this will be module two.
 
-* Module#8- Virtual Machine 2: Program Control
+* Module#8 - Virtual Machine 2: Program Control
 In the previous module we presented a virtual machine abstraction, and developed a basic VM translator that implements the VM language's arithmetic and memory access commands. In this module we'll complete the VM translator by ~implementing the remaining VM language's branching and function-calling commands~.
 
 ~Branching and function-calling~ are of course major elements of programming theory and practice. Therefore, we'll start the module with a general overview of their usage, abstraction and implementation. This will set the stage for the remainder of the module, in which we'll complete the specification and implementation of the VM translator.
@@ -3099,3 +3099,101 @@ need to make FibonacciElement.asm file(same as dir name)
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-02-06_20-10-09_screenshot.png]]
 
 ** Perspective
+
+* Module#9 - High Level Language
+#+DOWNLOADED: screenshot @ 2021-02-13 00:09:17
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-09-17_screenshot.png]]
+
+** The Jack Language in a nutshell
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:10:35
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-10-35_screenshot.png]]
+
+*** Take home lessons
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:11:27
+#+ATTR_ORG: :width 400
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-11-27_screenshot.png]]
+
+*** Hello World
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:13:02
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-13-02_screenshot.png]]
+
+*** Procedural processing
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:14:03
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-14-03_screenshot.png]]
+
+**** class / Main class
+#+DOWNLOADED: screenshot @ 2021-02-13 00:14:34
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-14-34_screenshot.png]]
+
+**** Control structure ( if, while, do)
+#+DOWNLOADED: screenshot @ 2021-02-13 00:15:55
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-15-55_screenshot.png]]
+
+**** Array / Arrays are not typed
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:16:16
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-16-16_screenshot.png]]
+
+**** Operating system call / OS services
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:16:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-16-47_screenshot.png]]
+
+**** Data types - Primitive & Class types
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:17:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-17-47_screenshot.png]]
+
+*** Question
+Q. When we execute a Jack program, the first subroutine that starts running is:
+ - main.main
+ - main.Main
+ - It depends on which function is executed
+ - Main.main // answer
+ - Main.Main
+
+A Jack program consists of one or more classes, and each class consists of one
+or more subroutines.  One class in a Jack program must be named Main, and one
+subroutine in this class must be named main.  When we execute a Jack program,
+the subroutine that starts running is Main.main.
+
+*** Summary
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:20:58
+#+ATTR_ORG: :width 400
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-20-58_screenshot.png]]
+
+** Object-based programming
+*** OO programming
+
+#+DOWNLOADED: screenshot @ 2021-02-13 00:23:19
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-23-19_screenshot.png]]
+**** using a class
+
+03:00
