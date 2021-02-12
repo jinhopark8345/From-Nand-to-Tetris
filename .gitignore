@@ -3,3 +3,9 @@ note.org
 .projectile
 tools
 materials/
+
+__pycache__/
+.cache
+
+.pytest_cache/
+*.pyc

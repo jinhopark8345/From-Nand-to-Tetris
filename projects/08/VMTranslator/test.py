@@ -1,43 +1,56 @@
-import sys
+import subprocess
 
 
-def run_test():
+def run_test(home_path):
     test_list = [
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.vm",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.tst",
         ),
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.vm",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/ProgramFlow/FibonacciSeries/FibonacciSeries.tst",
         ),
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.vm",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/SimpleFunction/SimpleFunction.tst",
         ),
         (
             "../FunctionCalls/NestedCall",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.tst",
         ),
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/Sys.vm",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/NestedCall/NestedCall.tst",
         ),
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/FibonacciElement/FibonacciElement.tst",
         ),
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.tst",
         ),
         (
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/",
-            "/home/jinho/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.tst",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/",
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/FunctionCalls/StaticsTest/StaticsTest.tst",
         ),
     ]
-
-    import subprocess
 
     cnt = 0
     # for i in range(0, 1):
@@ -45,30 +58,54 @@ def run_test():
         dirorfile = test_list[i][0]
         test_path = test_list[i][1]
 
-        output = subprocess.run(
+        translator_path = (
+            home_path
+            + "/Projects/FromNandToTetris/projects/08/VMTranslator/VMTranslator.py"
+        )
+
+        cpu_emulator_path = (
+            home_path + "/Projects/FromNandToTetris/tools/CPUEmulator.sh"
+        )
+
+        translate_result = subprocess.run(
             [
                 "python3",
-                "/home/jinho/Projects/FromNandToTetris/projects/08/VMTranslator/VMTranslator.py",
+                translator_path,
                 dirorfile,
             ],
             capture_output=True,
         )
+        test_result = subprocess.run(
+            [cpu_emulator_path, test_path],
+            capture_output=True,
+            text=True,
+        )
 
-        print()
-        print("dirorfile: ", dirorfile)
-        print("test_path: ", test_path)
-        print(
-            "\n".join(
-                [
-                    output_line.decode("ascii")
-                    for output_line in output.stdout.split(b"\n")
-                ]
+        if (
+            not test_result.stdout.strip()
+            == "End of script - Comparison ended successfully"
+        ):
+            print("fail: {}".format(dirorfile))
+            print(test_result.stderr)
+            # print("test fail")
+            # print("dirorfile: ", dirorfile)
+            # print("test_path: ", test_path)
+            print(
+                "\n".join(
+                    [
+                        output_line.decode("ascii")
+                        for output_line in translate_result.stdout.split(b"\n")
+                    ]
+                )
             )
-        )
-
-        subprocess.run(
-            ["/home/jinho/Projects/FromNandToTetris/tools/CPUEmulator.sh", test_path]
-        )
 
 
-run_test()
+        else:
+            print("pass: {}".format(dirorfile))
+
+
+if __name__ == "__main__":
+    import os
+
+    home_path = os.environ.get("HOME")
+    run_test(home_path)

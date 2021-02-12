@@ -28,7 +28,6 @@ class CodeWriter:
         self.assem_lines = []
 
         self.f = open(self.output_file, operation)
-        # self.ram = Ram()
         self.init_code_writer()
 
         self.f.close()
@@ -286,6 +285,47 @@ class CodeWriter:
         self.assem_lines.append("@SP")
         self.assem_lines.append("M=M+1")
 
+    def write_arithmetic_eqgtlt(self, command):
+
+        assem_pop = ["@SP", "M=M-1", "A=M", "D=M"]
+        # pop twice and subtract two val and save at D
+        self.assem_lines.extend(assem_pop)
+        self.assem_lines.append("@SP")
+        self.assem_lines.append("M=M-1")
+        self.assem_lines.append("A=M")
+        self.assem_lines.append("D=D-M")
+
+        # 1 has to be a varaible
+        self.assem_lines.append("@if_true{}".format(self.if_count))
+        if command == "eq":
+            self.assem_lines.append("D;JEQ")
+        elif command == "gt":
+            self.assem_lines.append("D;JLT")
+        else:  # command == 'lt'
+            self.assem_lines.append("D;JGT")
+        self.assem_lines.append("@if_false{}".format(self.if_count))
+        self.assem_lines.append("0;JMP")
+
+        self.assem_lines.append("(if_true{})".format(self.if_count))
+        self.assem_lines.append("@SP")
+        self.assem_lines.append("A=M")
+        self.assem_lines.append("M=-1")  # true
+        self.assem_lines.append("@SP")
+        self.assem_lines.append("M=M+1")
+        self.assem_lines.append("@if_end{}".format(self.if_count))
+        self.assem_lines.append("0;JMP")
+
+        self.assem_lines.append("(if_false{})".format(self.if_count))
+        self.assem_lines.append("@SP")
+        self.assem_lines.append("A=M")
+        self.assem_lines.append("M=0")  # false
+        self.assem_lines.append("@SP")
+        self.assem_lines.append("M=M+1")
+
+        self.assem_lines.append("(if_end{})".format(self.if_count))
+
+        self.if_count += 1
+
     def write_arithmetic(self, command):
         assem_pop = ["@SP", "M=M-1", "A=M", "D=M"]
 
@@ -307,46 +347,8 @@ class CodeWriter:
         elif command == "or":
             self.write_arithmetic_or()
 
-        # eg, gt, lt
         elif command in ["eq", "gt", "lt"]:
-
-            # pop twice and subtract two val and save at D
-            self.assem_lines.extend(assem_pop)
-            self.assem_lines.append("@SP")
-            self.assem_lines.append("M=M-1")
-            self.assem_lines.append("A=M")
-            self.assem_lines.append("D=D-M")
-
-            # 1 has to be a varaible
-            self.assem_lines.append("@if_true{}".format(self.if_count))
-            if command == "eq":
-                self.assem_lines.append("D;JEQ")
-            elif command == "gt":
-                self.assem_lines.append("D;JLT")
-            else:  # command == 'lt'
-                self.assem_lines.append("D;JGT")
-            self.assem_lines.append("@if_false{}".format(self.if_count))
-            self.assem_lines.append("0;JMP")
-
-            self.assem_lines.append("(if_true{})".format(self.if_count))
-            self.assem_lines.append("@SP")
-            self.assem_lines.append("A=M")
-            self.assem_lines.append("M=-1")  # true
-            self.assem_lines.append("@SP")
-            self.assem_lines.append("M=M+1")
-            self.assem_lines.append("@if_end{}".format(self.if_count))
-            self.assem_lines.append("0;JMP")
-
-            self.assem_lines.append("(if_false{})".format(self.if_count))
-            self.assem_lines.append("@SP")
-            self.assem_lines.append("A=M")
-            self.assem_lines.append("M=0")  # false
-            self.assem_lines.append("@SP")
-            self.assem_lines.append("M=M+1")
-
-            self.assem_lines.append("(if_end{})".format(self.if_count))
-
-            self.if_count += 1
+            self.write_arithmetic_eqgtlt(command)
         else:
             print("undefined arithmetic input")
 
@@ -433,6 +435,3 @@ class CodeWriter:
                 self.assem_lines.append("@14")
                 self.assem_lines.append("A=M")
                 self.assem_lines.append("M=D")
-
-        for ass_line in assem_lines:
-            self.f.writelines(ass_line + "\n")
