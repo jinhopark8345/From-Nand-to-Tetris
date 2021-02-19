@@ -1,0 +1,63 @@
+
+
+class Food {
+
+    field Array foods;
+    field int maxFoodLen;
+    field int foodSize;
+    field int foodHoleSize;
+    field int foodLen;
+    constructor Food new(int squareSize, int maxFoodLength) {
+
+        let maxFoodLen = maxFoodLength;
+        let foods = Array.new(maxFoodLen);
+        let maxFoodLen = 3;
+        let foodSize = squareSize;
+        let foodHoleSize = foodSize / 4;
+        let foodLen = 0;
+
+        do setFoods();
+
+        return this;
+    }
+    method Array getFoods(){return foods;}
+    method int getFoodLen(){return foodLen;}
+
+    method void setFoods(){
+        do setFood(0, 5,5);
+        do setFood(1, 10,10);
+        do setFood(2, 15,13);
+
+        return;
+    }
+
+    method void setFood(int idx, int x, int y){
+        let foods[idx*2] = x;
+        let foods[(idx*2)+1] = y;
+        do drawFood(x, y);
+        let foodLen = foodLen + 1;
+
+        return;
+    }
+
+
+    method void drawFood(int x, int y){
+        do Screen.setColor(true);
+        do Screen.drawRectangle((x*foodSize), (y*foodSize),
+                                (x*foodSize)+ foodSize, (y*foodSize) + foodSize);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle((x*foodSize) + foodHoleSize, (y*foodSize)+ foodHoleSize,
+                                (x*foodSize) -foodHoleSize + foodSize , (y*foodSize) - foodHoleSize + foodSize);
+
+        return ;
+    }
+    method void eraseFood(int x, int y){
+        do Screen.setColor(false);
+        do Screen.drawRectangle((x*foodSize), (y*foodSize),
+                                (x*foodSize)+ foodSize, (y*foodSize) + foodSize);
+
+        return ;
+    }
+
+}

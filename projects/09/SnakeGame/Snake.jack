@@ -24,6 +24,7 @@ class Snake {
 
     field int temp;
 
+
     /** Constructs a snake head with a given location and size. */
     /** sx: start x */
     /** sx: start y */
@@ -46,54 +47,16 @@ class Snake {
 
         let temp = 0;
 
-        // let sLen = 2;
-        // let headIdx = 1;
-        // let tailIdx = 0;
-        // let headX = sx;
-        // let headY = sy;
-        // let body[0] = sx-1;
-        // let body[1] = sy;
-        // let body[2] = sx;
-        // let body[3] = sy;
-
-        // let sLen = 3;
-        // let headIdx = 2;
-        // let tailIdx = 0;
-        // let headX = sx;
-        // let headY = sy;
-        // let body[0] = sx;
-        // let body[1] = sy;
-        // let body[2] = sx+1;
-        // let body[3] = sy;
-        // let body[4] = sx+2;
-        // let body[5] = sy;
-
-        // let sLen = 7;
-        // let headIdx = 6;
-        // let tailIdx = 0;
-        // let headX = sx;
-        // let headY = sy;
-        // let body[0] = sx;
-        // let body[1] = sy;
-        // let body[2] = sx+1;
-        // let body[3] = sy;
-        // let body[4] = sx+2;
-        // let body[5] = sy;
-        // let body[6] = sx+3;
-        // let body[7] = sy;
-        // let body[8] = sx+3;
-        // let body[9] = sy+1;
-        // let body[10] = sx+3;
-        // let body[11] = sy+2;
-        // let body[12] = sx+3;
-        // let body[13] = sy+3;
-
-        // do drawHead();
-        do draw();
+        do drawSnake();
 
 
         return this;
     }
+
+    method int getSnakeLength(){ return sLen;}
+    method int getSnakeHeadX(){ return headX;}
+    method int getSnakeHeadY(){ return headY;}
+    method Array getSnakeBody(){ return body;}
 
 
     /** Disposes this square. */
@@ -103,12 +66,25 @@ class Snake {
     }
 
     /** Draws the square on the screen. */
-    method void draw() {
+    method void drawSnake() {
         do Screen.setColor(true);
 
         let i = 0;
         while ( i < sLen) {
-            do Screen.drawRectangle(body[i*2]*sqSize, body[i*2+1]*sqSize, body[i*2]*sqSize + sqSize, body[i*2+1]*sqSize + sqSize);
+            do Screen.drawRectangle(body[i*2]*sqSize, body[i*2+1]*sqSize,
+                                    body[i*2]*sqSize + sqSize, body[i*2+1]*sqSize + sqSize);
+            let i = i+1;
+        }
+        return;
+    }
+
+    /** erases the square from the screen. */
+    method void erase() {
+        do Screen.setcolor(false);
+        let i = 0;
+        while ( i < sLen) {
+            do Screen.drawRectangle(body[i*2], body[i*2+1],
+                                    body[i*2] + sqSize, body[i*2+1] + sqSize);
             let i = i+1;
         }
         return;
@@ -116,47 +92,18 @@ class Snake {
 
     method void drawHead(){
         do Screen.setColor(true);
-        do Screen.drawRectangle((headX*sqSize), (headY*sqSize), (headX*sqSize)+ sqSize, (headY*sqSize) + sqSize);
+        do Screen.drawRectangle((headX*sqSize), (headY*sqSize),
+                                (headX*sqSize)+ sqSize, (headY*sqSize) + sqSize);
         return;
     }
 
-    method void eraseSq(idx){
-
-    }
     method void eraseTail(){
-
-        do Sys.wait(20);  // delays the next movement
-        // do Output.printInt(body[tailIdx*2]);         // charAt[2]: 99
-        // do Output.printString(",");         // charAt[2]: 99
-        // do Output.printString("y: ");         // charAt[2]: 99
-        // do Output.printInt(body[tailIdx*2]+1);         // charAt[2]: 99
-        // do Output.println();         // charAt[2]: 99
-
+        do Sys.wait(50);  // delays the next movement
         do Screen.setColor(false);
-        do Screen.drawRectangle(body[tailIdx*2] * sqSize, body[tailIdx*2+1] *sqSize, body[tailIdx*2]*sqSize + sqSize, body[tailIdx*2+1] * sqSize + sqSize);
-
+        do Screen.drawRectangle(body[tailIdx*2] * sqSize, body[tailIdx*2+1] *sqSize,
+                                body[tailIdx*2]*sqSize + sqSize, body[tailIdx*2+1] * sqSize + sqSize);
         return;
     }
-
-    /** erases the square from the screen. */
-    method void erase() {
-        do Screen.setcolor(false);
-
-        let i = 0;
-        while ( i < sLen) {
-            do Screen.drawRectangle(body[i*2], body[i*2+1], body[i*2] + sqSize, body[i*2+1] + sqSize);
-            let i = i+1;
-        }
-        return;
-    }
-
-    method void setSq(int idx, int x, int y){
-        let body[idx*2]   = x;
-        let body[idx*2+1] = y;
-
-        return;
-    }
-
 
     method void setNextHeadIdx(){
         if (headIdx < (sLen-1)){
@@ -182,8 +129,8 @@ class Snake {
             do setNextTailIdx(); // set new tail
 
             do setNextHeadIdx(); // set new head idx
-            let headY = headY - 1; // update head info
-            let body[headIdx*2] = headX;
+            let headY = headY - 1; // update head
+            let body[headIdx*2] = headX; // add new head to the body
             let body[headIdx*2+1] = headY;
 
             do drawHead(); // draw new head
@@ -193,190 +140,33 @@ class Snake {
     }
 
 
-    method boolean isEmpty(int x, int y){
-
-        let i = 0;
-
-        // do Output.printInt(x);
-        // do Output.printString(", ");
-        // do Output.printInt(y);
-        // do Output.printString(" ");
-        // do Output.println();
-
-        // check if snake body is on the way
-        while(i < sLen){
-            // do Output.println();
-            // check x & y
-            if (body[i*2] = x){
-                if (body[i*2+1] = y){
-                    return false;
-                }
-            }
-            let i = i + 1;
-        }
-
-        // need to add more condition when there is food and other obstacles
-
-        return true;
-    }
     /** Moves the square down by 2 pixels. */
     method void moveDown() {
-
-            do Output.printString("before");         // charAt[2]: 99
-            do Output.println();         // charAt[2]: 99
-            do Output.printString("tail : ");         // charAt[2]: 99
-            do Output.printInt(tailIdx);         // charAt[2]: 99
-            do Output.printString(", ");         // charAt[2]: 99
-            do Output.printString("head : ");         // charAt[2]: 99
-            do Output.printInt(headIdx);         // charAt[2]: 99
-            do Output.printString(", ");         // charAt[2]: 99
-            do Output.printString("sLen : ");         // charAt[2]: 99
-            do Output.printInt(sLen);         // charAt[2]: 99
-            do Sys.wait(50);  // delays the next movement
-
-        if (headY = 10){
-            do addDown();
-        } else{
-            if (headY < boundY){
-                if(isEmpty(headX, headY+1)){
-                    do eraseTail(); // erase current tail
-                    do setNextTailIdx(); // set new tail
-
-                    do setNextHeadIdx(); // set new head idx
-                    let headY = headY + 1; // update head info
-                    let body[headIdx*2] = headX;
-                    let body[headIdx*2+1] = headY;
-
-                    do drawHead(); // draw new head
-                } else {
-                    // do Output.printString("Something's there");         // charAt[2]: 99
-                    // do Output.println();         // charAt[2]: 99
-                }
-
-            }
-        }
-
-        // if (1 = temp - ((temp / 100) * 100)) {
-
-
-        //     do addDown();
-
-            do Output.printString("after");         // charAt[2]: 99
-            do Output.println();         // charAt[2]: 99
-            do Output.printString("tail : ");         // charAt[2]: 99
-            do Output.printInt(tailIdx);         // charAt[2]: 99
-            do Output.printString(", ");         // charAt[2]: 99
-            do Output.printString("head : ");         // charAt[2]: 99
-            do Output.printInt(headIdx);         // charAt[2]: 99
-            do Output.printString(", ");         // charAt[2]: 99
-            do Output.printString("sLen : ");         // charAt[2]: 99
-            do Output.printInt(sLen);         // charAt[2]: 99
-            do Sys.wait(50);  // delays the next movement
-
-        // } else {
-        //     if (headY < boundY){
-        //         do eraseTail(); // erase current tail
-        //         do setNextTailIdx(); // set new tail
-
-        //         do setNextHeadIdx(); // set new head idx
-        //         let headY = headY + 1; // update head info
-        //         let body[headIdx*2] = headX;
-        //         let body[headIdx*2+1] = headY;
-
-        //         do drawHead(); // draw new head
-        //     }
-
-        // }
-
-        return;
-    }
-
-    // method void addSq(int x, int y) {
-    //     let body[(sLen*2)]     = x;
-    //     let body[(sLen*2) + 1] = y;
-    //     let sLen = sLen + 1;
-    //     let headIdx = sLen-1;
-    //     return;
-    // }
-
-    /** Moves the square down by 2 pixels. */
-    method void addDown() {
-
-        // headIdx change
-        // tailIdx not change
-        // add x,y to body
-        // sLen change
-        // draw the rect
         if (headY < boundY){
-
-            // push all points from the current headIdx
-            // move the last element first until headIdx+2
-            let i = sLen;
-            while (i > headIdx+1){
-                let body[i*2] = body[(i-1)*2];
-                let body[i*2+1] = body[(i-1)*2+1];
-                let i = i - 1;
-            }
-            let headIdx = headIdx+1;
+            do eraseTail(); // erase current tail
+            do setNextTailIdx(); // set new tail
+            do setNextHeadIdx(); // set new head idx
             let headY = headY + 1; // update head info
             let body[headIdx*2] = headX;
             let body[headIdx*2+1] = headY;
-            let sLen = sLen + 1;
-
-            // move tailIdx when headIdx was right before tailIdx so tailIdx has been pushed
-            if (tailIdx = headIdx){
-                let tailIdx = headIdx + 1;
-            }
-
-            // do drawHead(); // draw new head
+            do drawHead(); // draw new head
         }
-
-
-        // add headIdx + 1
-
-
-
-
-        // do Output.printString("headY: ");         // charAt[2]: 99
-        // do Output.printInt(headY);         // charAt[2]: 99
-
-
-        // if (headY < boundY){
-        //     do eraseTail(); // erase current tail
-        //     do setNextTailIdx(); // set new tail
-
-        //     do setNextHeadIdx(); // set new head idx
-        //     let headY = headY + 1; // update head info
-        //     let body[headIdx*2] = headX;
-        //     let body[headIdx*2+1] = headY;
-
-        //     do drawHead(); // draw new head
-        // }
-
         return;
     }
 
-    /** Moves the square left by 2 pixels. */
     method void moveLeft() {
-
         if (headX > 0){
             do eraseTail(); // erase current tail
             do setNextTailIdx(); // set new tail
-
             do setNextHeadIdx(); // set new head idx
-
             let headX = headX - 1; // update head info
             let body[headIdx*2] = headX;
             let body[headIdx*2+1] = headY;
-
             do drawHead(); // draw new head
         }
-
-
         return;
     }
 
-    /** Moves the square right by 2 pixels. */
     method void moveRight() {
 
         if (headX < boundX){
@@ -389,6 +179,41 @@ class Snake {
             let headX = headX + 1; // update head info
             let body[headIdx*2] = headX;
             let body[headIdx*2+1] = headY;
+
+            do drawHead(); // draw new head
+        }
+
+        return;
+    }
+
+    method void addDown() {
+
+        // headIdx change
+        // tailIdx not change
+        // add x,y to body
+        // sLen change
+        // draw the rect
+        if (headY < boundY){
+
+            // move tailIdx when headIdx was right before tailIdx so tailIdx has been pushed
+            if (tailIdx - 1= headIdx){
+                do eraseTail(); // erase current tail
+                let tailIdx = tailIdx + 1;
+            }
+            // push all points from the current headIdx
+            // first, move the last element and second last .. until headIdx+2
+            let i = sLen;
+            while (i > headIdx+1){
+                let body[i*2] = body[(i-1)*2];
+                let body[i*2+1] = body[(i-1)*2+1];
+                let i = i - 1;
+            }
+            let headIdx = headIdx+1;
+            let headY = headY + 1; // update head info
+            let body[headIdx*2] = headX;
+            let body[headIdx*2+1] = headY;
+            let sLen = sLen + 1;
+
 
             do drawHead(); // draw new head
         }

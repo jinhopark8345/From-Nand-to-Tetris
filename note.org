@@ -3194,6 +3194,676 @@ the subroutine that starts running is Main.main.
 #+ATTR_ORG: :width 700
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-23-19_screenshot.png]]
+
 **** using a class
 
-03:00
+#+DOWNLOADED: screenshot @ 2021-02-15 23:37:12
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-37-12_screenshot.png]]
+
+**** building a class
+
+***** 1 field, access field indirectly
+#+DOWNLOADED: screenshot @ 2021-02-15 23:38:44
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-38-44_screenshot.png]]
+
+***** 2 this / explicit return
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:42:09
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-42-09_screenshot.png]]
+
+
+***** 3 plus
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:42:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-42-47_screenshot.png]]
+
+***** 4 print
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:43:48
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-43-48_screenshot.png]]
+
+***** 5 dispose / necessary, free up memory
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:44:46
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-44-46_screenshot.png]]
+
+**** Object representation
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:47:09
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-47-09_screenshot.png]]
+
+***** Question
+Which Jack classes should have a method for disposing objects?
+
+
+Every class that has at least one constructor / answer
+Every class that has exactly one constructor
+Every class
+
+#+begin_quote
+Every class that allows the construction of
+objects should feature means to dispose them. If a class consists only of functions,
+there is no need to worry about object construction and disposal.
+#+end_quote
+
+**** recap
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:49:24
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-49-24_screenshot.png]]
+
+** List processing
+
+*** example
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:51:32
+#+ATTR_ORG: :width 400
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-51-32_screenshot.png]]
+
+*** List API(partial) & client code
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:53:07
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-53-07_screenshot.png]]
+
+*** Creation
+
+#+DOWNLOADED: screenshot @ 2021-02-15 23:55:02
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-55-02_screenshot.png]]
+**** 1
+#+DOWNLOADED: screenshot @ 2021-02-15 23:55:22
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-55-22_screenshot.png]]
+
+
+**** 2
+#+DOWNLOADED: screenshot @ 2021-02-15 23:55:31
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-55-31_screenshot.png]]
+**** 3
+#+DOWNLOADED: screenshot @ 2021-02-15 23:55:41
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-55-41_screenshot.png]]
+*** Question
+
+What does the keyword “this” refers to? Mark the correct answer, or answers
+
+
+- In constructors: the current object / answer
+    Constructors operate on the current object, and therefore using “this” is quite natural in their code.
+- In methods: the current object / answer
+    Methods operate on the current object, and therefore using “this” is quite natural in their code.
+- In functions: the current object / not an answer
+*** sequential access
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:37:49
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-37-49_screenshot.png]]
+**** 1
+#+DOWNLOADED: screenshot @ 2021-02-16 00:38:55
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-38-55_screenshot.png]]
+**** 2
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:39:15
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-39-15_screenshot.png]]
+**** 3
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:39:22
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-39-22_screenshot.png]]
+
+*** recursive access
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:42:00
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-42-00_screenshot.png]]
+
+**** 1
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:42:54
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-42-54_screenshot.png]]
+
+**** 2
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:43:03
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-43-03_screenshot.png]]
+
+**** 3
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:43:19
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-43-19_screenshot.png]]
+
+**** 4
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:43:35
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-43-35_screenshot.png]]
+
+*** recap
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:44:42
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-44-42_screenshot.png]]
+
+*** list representation
+
+#+DOWNLOADED: screenshot @ 2021-02-16 00:46:18
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-16_00-46-18_screenshot.png]]
+
+** Jack Language Specification: Syntax
+*** white space / comments
+
+#+DOWNLOADED: screenshot @ 2021-02-18 11:57:00
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_11-57-00_screenshot.png]]
+
+*** Keywords
+#+DOWNLOADED: screenshot @ 2021-02-18 11:55:26
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_11-55-26_screenshot.png]]
+*** symbols
+#+DOWNLOADED: screenshot @ 2021-02-18 11:56:04
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_11-56-04_screenshot.png]]
+
+*** Constants
+
+#+DOWNLOADED: screenshot @ 2021-02-18 11:58:22
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_11-58-22_screenshot.png]]
+
+*** identifiers
+
+#+DOWNLOADED: screenshot @ 2021-02-18 11:58:49
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_11-58-49_screenshot.png]]
+
+** Jack Language Specification: Data types
+*** example
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:13:18
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-13-18_screenshot.png]]
+
+*** Type conversions
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:16:36
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-16-36_screenshot.png]]
+
+** Jack Language Specification: Classes
+*** example
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:21:18
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-21-18_screenshot.png]]
+
+*** Classes that provide functionality
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:22:22
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-22-22_screenshot.png]]
+
+*** Classes that represent entities (objects)
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:27:29
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-27-29_screenshot.png]]
+
+Don't mix library functionality and object representation in the same class.
+
+**** typical bad example!
+#+DOWNLOADED: screenshot @ 2021-02-18 12:28:15
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-28-15_screenshot.png]]
+
+gcd(greatest common divisor) is very general function. other functions can benefit from this function as well.
+
+**** after refactoring!
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:29:15
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-29-15_screenshot.png]]
+
+*** Jack application
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:31:27
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-31-27_screenshot.png]]
+
+*** Jack's standard class library / OS
+**** ex
+#+DOWNLOADED: screenshot @ 2021-02-18 12:33:53
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-33-53_screenshot.png]]
+**** api
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:35:02
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-35-02_screenshot.png]]
+
+** Jack Language Specification: Methods
+*** subroutines
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:40:08
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-40-08_screenshot.png]]
+
+*** constructors
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:40:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-40-47_screenshot.png]]
+
+*** Variables
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:41:27
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-41-27_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:41:46
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-41-46_screenshot.png]]
+
+*** Statements
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:42:14
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-42-14_screenshot.png]]
+
+*** Expressions
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:43:23
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-43-23_screenshot.png]]
+
+*** Subroutine calls
+**** ex
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:44:03
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-44-03_screenshot.png]]
+**** question
+
+#+DOWNLOADED: screenshot @ 2021-02-18 12:46:55
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_12-46-55_screenshot.png]]
+*** Strings
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:08:10
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-08-10_screenshot.png]]
+
+*** Arrays
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:09:30
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-09-30_screenshot.png]]
+
+*** ~End note: peculiar features of the Jack language~
+#+DOWNLOADED: screenshot @ 2021-02-18 14:12:03
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-12-03_screenshot.png]]
+
+** Developing Apps using the Jack Language and OS
+
+*** sample applications
+**** Stats
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:13:43
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-13-43_screenshot.png]]
+**** Tetris
+#+DOWNLOADED: screenshot @ 2021-02-18 14:13:49
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-13-49_screenshot.png]]
+**** Bouncing ball
+#+DOWNLOADED: screenshot @ 2021-02-18 14:13:54
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-13-54_screenshot.png]]
+
+**** Sokoban
+#+DOWNLOADED: screenshot @ 2021-02-18 14:14:35
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-14-35_screenshot.png]]
+
+*** Developing a Jack application
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:16:55
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-16-55_screenshot.png]]
+
+*** running a Jack Application
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:17:09
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-17-09_screenshot.png]]
+
+*** Handling output: text
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:17:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-17-47_screenshot.png]]
+
+*** Handling output: graphics
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:34:43
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-34-43_screenshot.png]]
+
+*** Handling inputs
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:54:37
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-54-37_screenshot.png]]
+
+**** The Jack character set
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:55:14
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-55-14_screenshot.png]]
+
+*** The Jack OS: Math
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:55:51
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-55-51_screenshot.png]]
+
+*** The Jack OS: String
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:56:46
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-56-46_screenshot.png]]
+
+**** questions
+
+#+DOWNLOADED: screenshot @ 2021-02-18 14:58:50
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_14-58-50_screenshot.png]]
+
+second statement is wrong because String ~variable~ is only a reference and
+constructor of that string variable hasn't called yet.
+
+*** The Jack OS: Array
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:01:36
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-01-36_screenshot.png]]
+
+*** The Jack OS: Memory
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:02:36
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-02-36_screenshot.png]]
+
+*** The Jack OS: Sys
+#+DOWNLOADED: screenshot @ 2021-02-18 15:02:54
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-02-54_screenshot.png]]
+*** The Jack OS: Output
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:03:28
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-03-28_screenshot.png]]
+
+*** The Jack OS: Screen
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:03:46
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-03-46_screenshot.png]]
+
+*** The Jack OS: Keyboard
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:04:05
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-04-05_screenshot.png]]
+
+*** Sample Jack Programs
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:06:07
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-06-07_screenshot.png]]
+
+*** Best Practice
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:07:44
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-07-44_screenshot.png]]
+
+** A Sample Jack App: Square Dance
+*** objective
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:08:55
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-08-55_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:11:38
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-11-38_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:17:55
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-17-55_screenshot.png]]
+
+*** App design
+
+#+DOWNLOADED: screenshot @ 2021-02-18 15:18:48
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_15-18-48_screenshot.png]]
+
+*** Square class API
+
+#+DOWNLOADED: screenshot @ 2021-02-18 18:01:38
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_18-01-38_screenshot.png]]
+
+*** square class
+
+#+DOWNLOADED: screenshot @ 2021-02-18 18:02:57
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_18-02-57_screenshot.png]]
+
+**** Question
+Suppose that instead of moving a filled square image on the screen, we want to
+move a filled circle image.  Assume that all the other rules of the game remain
+the same. Mark the correct statement(s):
+
+- Compared to the Square program, constructing and disposing a Circle object would require more or less the same programming effort / Correct
+
+- Compared to the Square program, controlling the user interface of the Circle program would require more or less the same programming effort / Correct
+
+- Optimizing the animation speed of a graphical circle image would require more or less the same programming effort as that of a graphical square image
+
+- Consider a Square object of size r, and a Circle object whose radius is also
+  r. The representation of the Circle object in the RAM would take up more
+  memory space than the representation of the Square object in the RAM
+
+*** SquareGame class
+
+** Graphics optimization
+
+*** Handling sprites
+
+#+DOWNLOADED: screenshot @ 2021-02-18 18:21:31
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_18-21-31_screenshot.png]]
+
+*** memory map
+
+#+DOWNLOADED: screenshot @ 2021-02-18 18:22:58
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_18-22-58_screenshot.png]]
+
+*** accessing memory: read / write
+
+#+DOWNLOADED: screenshot @ 2021-02-18 18:24:27
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_18-24-27_screenshot.png]]
+
+*** Drawing pixels
+
+#+DOWNLOADED: screenshot @ 2021-02-18 19:53:50
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_19-53-50_screenshot.png]]
+
+*** Standard drawing
+
+#+DOWNLOADED: screenshot @ 2021-02-18 19:55:04
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_19-55-04_screenshot.png]]
+
+**** question
+Consider the sprite discussed in the lecture, which consists of 75 pixels, arranged in 16 rows. Suppose that drawing a single pixel using the drawPixel method requires 40 low-level machine operations.  How many low-level machine operations (total) will be required to draw the entire sprite, if we draw it using the drawPixel method?
+
+3000 / correct
+
+#+begin_src asm
+// Correct
+75 * 40 = 3000
+#+end_src
+
+
+
+Each row in the sprite can also be viewed as a 16-bit value. Suppose that we draw the same sprite by writing these numbers into the RAM, instead of using the drawPixel method.  How many low-level machine operations (total) will be required to draw the entire sprite using this method (start by figuring out how many machine operations are required to write one 16-bit value)?
+
+64 / correct
+
+Explanation: writing a 16-bit value to the RAM can be implemented using 4 machine instructions:
+#+begin_src asm
+// RAM[8000] = 7 (for example)
+@7
+D = A
+@8000
+M = D
+#+end_src
+
+*** Custom drawing
+
+#+DOWNLOADED: screenshot @ 2021-02-18 20:00:14
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_20-00-14_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-18 20:02:07
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_20-02-07_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-18 20:02:50
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_20-02-50_screenshot.png]]
+
+*** Bitmap editor
+
+#+DOWNLOADED: screenshot @ 2021-02-18 20:04:50
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_20-04-50_screenshot.png]]
+
+*** Best practice
+
+#+DOWNLOADED: screenshot @ 2021-02-18 20:06:11
+#+ATTR_ORG: :width 500
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_20-06-11_screenshot.png]]
+
+** Perspective
+“Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away.”

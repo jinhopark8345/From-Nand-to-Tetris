@@ -9,6 +9,10 @@ class Main {
       /* Prints some text using the standard library. */
       do Output.printString("Hello world!");
       do Output.println();      // New line
+      do Output.printString("This is a test!");
+      do Output.println();      // New line
+      do Output.printString("This is another test!");
+      do Output.println();      // New line
       return;
    }
 }
