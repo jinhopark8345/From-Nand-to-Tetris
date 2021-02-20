@@ -94,11 +94,12 @@ class Snake {
         do Screen.setColor(true);
         do Screen.drawRectangle((headX*sqSize), (headY*sqSize),
                                 (headX*sqSize)+ sqSize, (headY*sqSize) + sqSize);
+
+        do Sys.wait(50);  // delays the next movement
         return;
     }
 
     method void eraseTail(){
-        do Sys.wait(50);  // delays the next movement
         do Screen.setColor(false);
         do Screen.drawRectangle(body[tailIdx*2] * sqSize, body[tailIdx*2+1] *sqSize,
                                 body[tailIdx*2]*sqSize + sqSize, body[tailIdx*2+1] * sqSize + sqSize);
@@ -124,6 +125,7 @@ class Snake {
 
     /** Moves the square up by 2 pixels. */
     method void moveUp() {
+        do Sys.wait(50);  // delays the next movement
         if (headY > 0){
             do eraseTail(); // erase current tail
             do setNextTailIdx(); // set new tail
@@ -142,6 +144,8 @@ class Snake {
 
     /** Moves the square down by 2 pixels. */
     method void moveDown() {
+
+        do Sys.wait(50);  // delays the next movement
         if (headY < boundY){
             do eraseTail(); // erase current tail
             do setNextTailIdx(); // set new tail
@@ -155,6 +159,7 @@ class Snake {
     }
 
     method void moveLeft() {
+        do Sys.wait(50);  // delays the next movement
         if (headX > 0){
             do eraseTail(); // erase current tail
             do setNextTailIdx(); // set new tail
@@ -168,7 +173,7 @@ class Snake {
     }
 
     method void moveRight() {
-
+        do Sys.wait(50);  // delays the next movement
         if (headX < boundX){
             do eraseTail(); // erase current tail
             do setNextTailIdx(); // set new tail
@@ -186,17 +191,11 @@ class Snake {
         return;
     }
 
-    method void addDown() {
 
-        // headIdx change
-        // tailIdx not change
-        // add x,y to body
-        // sLen change
-        // draw the rect
-        if (headY < boundY){
-
+    method void getBigger(int x, int y) {
+        // if (headY < boundY){
             // move tailIdx when headIdx was right before tailIdx so tailIdx has been pushed
-            if (tailIdx - 1= headIdx){
+            if (tailIdx-1 = headIdx){
                 do eraseTail(); // erase current tail
                 let tailIdx = tailIdx + 1;
             }
@@ -209,14 +208,15 @@ class Snake {
                 let i = i - 1;
             }
             let headIdx = headIdx+1;
-            let headY = headY + 1; // update head info
+            let headX = headX + x;
+            let headY = headY + y; // update head info
             let body[headIdx*2] = headX;
             let body[headIdx*2+1] = headY;
             let sLen = sLen + 1;
 
 
             do drawHead(); // draw new head
-        }
+        // }
 
         return;
     }

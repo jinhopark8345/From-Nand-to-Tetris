@@ -25,6 +25,7 @@ class SnakeGame {
     field int i;
     field int tempX;
     field int tempY;
+    field int tempCnt;
 
     field Array tempBody;
 
@@ -34,7 +35,6 @@ class SnakeGame {
         // of the screen.
         let snake = Snake.new(sx, sy, squareSize, maxLen);
         let direction = 0;  // initial state is no movement
-
         let food = Food.new(squareSize, 3);
 
         return this;
@@ -49,32 +49,54 @@ class SnakeGame {
 
 
     method int isEmpty(int x, int y){
-        let i = 0;
         // check if snake body is on the way
         let tempX = snake.getSnakeHeadX();
         let tempY = snake.getSnakeHeadY();
+
+        let i = 0;
+        let tempCnt = 0;
+        let temp = snake.getSnakeLength();
         let tempBody = snake.getSnakeBody();
-        while(i < snake.getSnakeLength()){
+        while(i < temp){
             // check x & y
             if (tempBody[i*2] = tempX+x){
                 if (tempBody[i*2+1] = tempY+y){
-                    return 2; // return 2 when it was the snake body
+                    // since we get the whole body and looping
+                    let tempCnt = tempCnt + 1;
+                    if(tempCnt = 2){
+                        return 2; // return 2 when it was the snake body
+                    }
                 }
             }
             let i = i + 1;
         }
 
+
+        // check if it was food where the head is
         let i = 0;
         let tempBody = food.getFoods();
-        while(food.getFoodLen()){
-            let i = i+1;
+        let temp = food.getFoodLen();
 
+        while(i < temp){
             if (tempBody[i*2] = tempX+x){
                 if (tempBody[i*2+1] = tempY+y){
+
+                    do food.removeFood(i);
+
+
+                    let temp = food.getFoodLen();
+                    do Output.printInt(temp);
+
+                    if(food.getFoodLen() = 0){
+                        do food.setFoods();
+                    }
+
                     return 3; // return 3 when it was a food
                 }
             }
+            let i = i+1;
         }
+
 
         // return 1 when it's empty
         return 1;
@@ -85,34 +107,69 @@ class SnakeGame {
     /** Moves the snake in the current direction. */
     method void moveSnake() {
         if (direction = 1) {
-            do snake.moveUp();
+            let temp = isEmpty(0,-1);
+            if (temp = 1){
+                do snake.moveUp();
+            } else {
+                if(temp = 2){
+                    // game over
+                    // do Output.printString("Game Over");
+                    // do snake.moveDown();
+                } else { // temp = 3
+                    do snake.getBigger(0, -1);
+                    do snake.moveUp();
+                }
+            }
         }
         if (direction = 2) {
             let temp = isEmpty(0,1);
 
-            do Output.printInt(temp);
-            do Output.println();
-
-            if(temp = 1){
+            if (temp = 1){
                 do snake.moveDown();
-                // do Output.printString("empty");
-                // do Output.println();
-            } else{
+
+            } else {
                 if(temp = 2){
                     // game over
-                    do Output.printString("game over: you ate your body");
-                    // do Output.println();
-
+                    // do Output.printString("Game Over");
+                    // do snake.moveDown();
                 } else { // temp = 3
-                    do snake.addDown();
-                    // do Output.printString("yumyum");
-                    // do Output.println();
+                    do snake.getBigger(0, 1);
+                    do snake.moveDown();
                 }
             }
         }
-        if (direction = 3) { do snake.moveLeft(); }
-        if (direction = 4) { do snake.moveRight(); }
-        do Sys.wait(gSpeed);  // delays the next movement
+        if (direction = 3) {
+            let temp = isEmpty(-1,0);
+            if (temp = 1){
+                do snake.moveLeft();
+            } else {
+                if(temp = 2){
+                    // game over
+                    // do Output.printString("Game Over");
+                    // do snake.moveDown();
+                } else { // temp = 3
+                    do snake.getBigger(-1, 0);
+                    do snake.moveLeft();
+                }
+            }
+        }
+        if (direction = 4) {
+
+            let temp = isEmpty(1,0);
+            if (temp = 1){
+                do snake.moveRight();
+            } else {
+                if(temp = 2){
+                    // game over
+                    // do Output.printString("Game Over");
+                    // do snake.moveDown();
+                } else { // temp = 3
+                    do snake.getBigger(1, 0);
+                    do snake.moveRight();
+                }
+            }
+        }
+        // do Sys.wait(gSpeed);  // delays the next movement
         return;
     }
 

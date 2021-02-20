@@ -1,0 +1,8 @@
+function Main.main 1
+push constant 10
+push constant 15
+push constant 8
+call Snake.new 3
+pop local 0
+push constant 0
+return

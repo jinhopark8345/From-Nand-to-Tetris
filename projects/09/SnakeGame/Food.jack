@@ -40,6 +40,13 @@ class Food {
         return;
     }
 
+    method void removeFood(int idx){
+        let foods[idx*2] = -1;
+        let foods[(idx*2)+1] = -1;
+        let foodLen = foodLen - 1;
+
+        return;
+    }
 
     method void drawFood(int x, int y){
         do Screen.setColor(true);
