@@ -170,6 +170,21 @@ class SnakeGame {
         //     }
         // }
         // do Sys.wait(gSpeed);  // delays the next movement
+
+        if (direction = 1) {
+            do snake.moveUp();
+        }
+        if (direction = 2) {
+            do snake.moveDown();
+        }
+
+        if (direction = 3) {
+            do snake.moveLeft();
+        }
+        if (direction = 4) {
+            do snake.moveRight();
+        }
+        do Sys.wait(gSpeed);  // delays the next movement
         return;
     }
 

@@ -1,8 +1,15 @@
 function Main.main 1
-push constant 10
-push constant 15
-push constant 8
-call Snake.new 3
+push constant 3
+push constant 4
+push constant 16
+push constant 50
+call SnakeGame.new 4
 pop local 0
+push local 0
+call SnakeGame.run 1
+pop temp 0
+push local 0
+call SnakeGame.dispose 1
+pop temp 0
 push constant 0
 return
