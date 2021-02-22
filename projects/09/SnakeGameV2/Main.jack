@@ -21,7 +21,7 @@ class Main {
 
         var SnakeGame game;
         // 512 x 256, square size should be 2 ** n
-        let game = SnakeGame.new(20,7, 16, 50);
+        let game = SnakeGame.new(20,7, 16, 200);
         do game.run();
         do game.dispose();
 

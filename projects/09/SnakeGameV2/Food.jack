@@ -1,0 +1,128 @@
+class Food{
+
+    field Array foodDataX;
+    field Array foodDataY;
+    field Array food;
+    field int foodMaxIdx;
+    field int foodSize; // square size
+    field int foodDataIdx; // current food idx
+    field int boundX;
+    field int boundY;
+    field int foodLen; // 3, number of food on the screen
+    field int foodHoleSize;
+
+    constructor Food new(int squareSize, int fLen){
+        // map boundary
+        let foodSize = squareSize;
+        let boundX = (512 / foodSize) - 2;
+        let boundY = (256 / foodSize) - 2;
+
+        // food data
+        let foodMaxIdx = 50;
+        let foodDataX = Array.new(foodMaxIdx);
+        let foodDataY = Array.new(foodMaxIdx);
+
+        // food array
+        let foodLen = fLen;
+        let food = Array.new(2*foodLen);
+        let foodHoleSize = 2;
+        let foodDataIdx = 0;
+
+        // Set up food
+        let foodDataX[0] = 23;  let foodDataX[1] = 17;  let foodDataX[2] = 5;   let foodDataX[3] = 14;  let foodDataX[4] = 6;   let foodDataX[5] = 8;  let foodDataX[6] = 19; let foodDataX[7] = 8; let foodDataX[8] = 6; let foodDataX[9] = 23;
+        let foodDataX[10] = 17; let foodDataX[11] = 5;  let foodDataX[12] = 14; let foodDataX[13] = 6;  let foodDataX[14] = 8;  let foodDataX[15] = 4; let foodDataX[16] = 9; let foodDataX[17] = 14; let foodDataX[18] = 13; let foodDataX[19] = 30;
+        let foodDataX[20] = 29; let foodDataX[21] = 5;  let foodDataX[22] = 18; let foodDataX[23] = 6;  let foodDataX[24] = 8;  let foodDataX[25] = 19; let foodDataX[26] = 9; let foodDataX[27] = 23; let foodDataX[28] = 17; let foodDataX[29] = 23;
+        let foodDataX[30] = 17; let foodDataX[31] = 5;  let foodDataX[32] = 14; let foodDataX[33] = 17; let foodDataX[34] = 8;  let foodDataX[35] = 19; let foodDataX[36] = 8; let foodDataX[37] = 25; let foodDataX[38] = 14; let foodDataX[39] = 6;
+        let foodDataX[40] = 23; let foodDataX[41] = 26; let foodDataX[42] = 27; let foodDataX[43] = 13; let foodDataX[44] = 15; let foodDataX[45] = 17; let foodDataX[46] = 24; let foodDataX[47] = 23; let foodDataX[48] = 17; let foodDataX[49] = 23;
+
+        let foodDataY[0] = 13;  let foodDataY[1] = 7;  let foodDataY[2] = 5; let foodDataY[3] = 14; let foodDataY[4] = 6;  let foodDataY[5] = 8;  let foodDataY[6] = 9; let foodDataY[7] = 8; let foodDataY[8] = 6; let foodDataY[9] = 13;
+        let foodDataY[10] = 7;  let foodDataY[11] = 5; let foodDataY[12] = 4; let foodDataY[13] = 6;  let foodDataY[14] = 8;  let foodDataY[15] = 4; let foodDataY[16] = 9; let foodDataY[17] = 14; let foodDataY[18] = 3; let foodDataY[19] = 10;
+        let foodDataY[20] = 9;  let foodDataY[21] = 5; let foodDataY[22] = 8; let foodDataY[23] = 6;  let foodDataY[24] = 8;  let foodDataY[25] = 9; let foodDataY[26] = 9; let foodDataY[27] = 13; let foodDataY[28] = 7; let foodDataY[29] = 13;
+        let foodDataY[30] = 7;  let foodDataY[31] = 5; let foodDataY[32] = 14; let foodDataY[33] = 7;  let foodDataY[34] = 8;  let foodDataY[35] = 9; let foodDataY[36] = 8; let foodDataY[37] = 5; let foodDataY[38] = 4; let foodDataY[39] = 6;
+        let foodDataY[40] = 13; let foodDataY[41] = 6; let foodDataY[42] = 7; let foodDataY[43] = 13;  let foodDataY[44] = 5;  let foodDataY[45] = 7; let foodDataY[46] = 4; let foodDataY[47] = 13; let foodDataY[48] = 7; let foodDataY[49] = 13;
+
+        do drawFood(0);
+        do drawFood(1);
+        do drawFood(2);
+        return this;
+    }
+
+    method int getFoodLen(){return foodLen;}
+    method Array getFood(){return food;}
+
+    method void removeAndDrawFood(int foodIdx){
+        // do eraseFood(x,y); // food will be deleted automatically by snake
+        do drawFood(foodIdx);
+
+        return;
+    }
+
+    method boolean isInboundary(int x, int y){
+
+
+        if(x < 3){
+            return false;
+        }
+        if(x > (boundX-3)){
+            return false;
+        }
+        if(y < 3){
+            return false;
+        }
+        if(y > (boundY-3)){
+            return false;
+        }
+
+        return true;
+    }
+
+    method void drawFood(int foodIdx){
+        var int tempX;
+        var int tempY;
+        let tempX = foodDataX[foodDataIdx];
+        let tempY = foodDataY[foodDataIdx];
+
+        if (foodDataIdx > foodMaxIdx){
+            do Output.printString("You Won!");
+        } else {
+            if (isInboundary(tempX,tempY)){
+                do Screen.setColor(true);
+                do Screen.drawRectangle(tempX*foodSize,
+                                        tempY*foodSize,
+                                        tempX*foodSize + foodSize,
+                                        tempY*foodSize + foodSize);
+
+                do Screen.setColor(false);
+                do Screen.drawRectangle(tempX*foodSize + foodHoleSize,
+                                        tempY*foodSize + foodHoleSize,
+                                        tempX*foodSize + foodSize - foodHoleSize,
+                                        tempY*foodSize + foodSize - foodHoleSize);
+                let food[2* foodIdx] = tempX;
+                let food[2* foodIdx+ 1] = tempY;
+            }
+
+            let foodDataIdx = foodDataIdx + 1;
+
+        }
+
+
+        return;
+    }
+
+    method void eraseFood(int x, int y){
+        if (isInboundary(x,y)){
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x*foodSize,
+                                    y*foodSize,
+                                    x*foodSize + foodSize,
+                                    y*foodSize + foodSize);
+
+        }
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

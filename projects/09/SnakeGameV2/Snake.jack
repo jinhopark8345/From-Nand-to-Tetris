@@ -55,6 +55,14 @@ class Snake{
 
         return;
     }
+
+    method Node getHead(){
+        return body.getHead();
+    }
+
+
+
+
     method void snake_addHeadDown(){
         var Node node;
         var Array data;

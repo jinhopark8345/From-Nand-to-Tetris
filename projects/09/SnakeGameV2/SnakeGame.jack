@@ -27,6 +27,7 @@ class SnakeGame {
     field int tempY;
     field int tempCnt;
     field int increaseI;
+    field Food food;
 
     field Array tempBody;
 
@@ -35,8 +36,10 @@ class SnakeGame {
         // Creates a 30 by 30 pixels square and positions it at the top-left
         // of the screen.
         let snake = Snake.new(sx, sy, squareSize);
+        let food = Food.new(squareSize, 3);
         let direction = 0;  // initial state is no movement
         // let food = Food.new(squareSize, 3);
+        let gSpeed = gameSpeed;
 
         let i = 0;
         let increaseI = 10;
@@ -51,98 +54,126 @@ class SnakeGame {
     }
 
 
-    // method int isEmpty(int x, int y){
-    //     // check if snake body is on the way
-    //     let tempX = snake.getSnakeHeadX();
-    //     let tempY = snake.getSnakeHeadY();
+    method int isEmpty(int x, int y){
+        // check if snake body is on the way
+        var Node node;
+        var Array curNodeData;
+        var int nextHeadX;
+        var int nextHeadY;
+        var int i;
+        var Array tempFood;
+        var int foodLen;
 
-    //     let i = 0;
-    //     let tempCnt = 0;
-    //     let temp = snake.getSnakeLength();
-    //     let tempBody = snake.getSnakeBody();
-    //     while(i < temp){
-    //         // check x & y
-    //         if (tempBody[i*2] = tempX+x){
-    //             if (tempBody[i*2+1] = tempY+y){
-    //                 // since we get the whole body and looping
-    //                 let tempCnt = tempCnt + 1;
-    //                 if(tempCnt = 2){
-    //                     return 2; // return 2 when it was the snake body
-    //                 }
-    //             }
-    //         }
-    //         let i = i + 1;
-    //     }
+        let curNodeData = Array.new(2);
+        let node = snake.getHead();
+        let curNodeData = node.getData();
+        let nextHeadX = curNodeData[0] + x;
+        let nextHeadY = curNodeData[1] + y;
 
+        while(~(node = null)){
+            let curNodeData = node.getData();
+            if (curNodeData[0] = nextHeadX){
+                if (curNodeData[1] = nextHeadY){
+                    do Output.printString("game over");
+                    do Output.println();
+                    // let direction = 0;
+                    return -1;
+                }
+            }
+            let node = node.getNext();
+        }
 
-    //     // check if it was food where the head is
-    //     let i = 0;
-    //     let tempBody = food.getFoods();
-    //     let temp = food.getFoodLen();
+        let i = 0;
+        let foodLen = food.getFoodLen();
+        let tempFood = Array.new(2*foodLen);
+        let tempFood = food.getFood();
 
-    //     while(i < temp){
-    //         if (tempBody[i*2] = tempX+x){
-    //             if (tempBody[i*2+1] = tempY+y){
+        while(i < foodLen){
+            if (tempFood[i*2] = nextHeadX){
+                if (tempFood[i*2+1] = nextHeadY){
 
-    //                 do food.removeFood(i);
+                    // 1. remove food from the screen: don't need to do it
 
+                    // 2. replace the food data with the new one
+                    // 3. draw new food on the screen
+                    do food.drawFood(i);
 
-    //                 let temp = food.getFoodLen();
-    //                 do Output.printInt(temp);
+                    return 2; // return 3 when it was a food
+                }
+            }
 
-    //                 if(food.getFoodLen() = 0){
-    //                     do food.setFoods();
-    //                 }
+            let i = i+1;
+        }
 
-    //                 return 3; // return 3 when it was a food
-    //             }
-    //         }
-    //         let i = i+1;
-    //     }
-
-
-    //     // return 1 when it's empty
-    //     return 1;
-    // }
+        return 1;
+    }
 
 
 
     /** Moves the snake in the current direction. */
     method void moveSnake() {
+        var int whatsnext;
         if (direction = 1) {
-            do snake.moveUp();
-            let i = i+1;
-            if (i = increaseI){
+            let whatsnext = isEmpty(0, -1);
+            // let whatsnext = 1;
+            if(whatsnext = 1){
+                do snake.moveUp();
+                // let i = i+1;
+                // if (i = increaseI){
+                //     do snake.snake_addHeadUp();
+                //     let i = 0;
+                // }
+            }
+            if(whatsnext = 2){
                 do snake.snake_addHeadUp();
-                let i = 0;
             }
         }
         if (direction = 2) {
-            do snake.moveDown();
-            let i = i+1;
-            if (i =increaseI){
+            let whatsnext = isEmpty(0, 1);
+            // let whatsnext = 1;
+            if(whatsnext = 1){
+                do snake.moveDown();
+                // let i = i+1;
+                // if (i =increaseI){
+                //     do snake.snake_addHeadDown();
+                //     let i = 0;
+                // }
+            }
+            if(whatsnext = 2){
                 do snake.snake_addHeadDown();
-                let i = 0;
             }
         }
 
         if (direction = 3) {
-            do snake.moveLeft();
-            let i = i+1;
-            if (i =increaseI){
+            let whatsnext = isEmpty(-1, 0);
+            // let whatsnext = 1;
+            if(whatsnext = 1){
+                do snake.moveLeft();
+                // let i = i+1;
+                // if (i =increaseI){
+                //     do snake.snake_addHeadLeft();
+                //     let i = 0;
+                // }
+            }
+            if(whatsnext = 2){
                 do snake.snake_addHeadLeft();
-                let i = 0;
             }
         }
         if (direction = 4) {
-            do snake.moveRight();
-            let i = i+1;
-            if (i =increaseI){
+            let whatsnext = isEmpty(1, 0);
+            if(whatsnext = 1){
+                do snake.moveRight();
+                // let i = i+1;
+                // if (i =increaseI){
+                //     do snake.snake_addHeadRight();
+                //     let i = 0;
+                // }
+            }
+            if(whatsnext = 2){
                 do snake.snake_addHeadRight();
-                let i = 0;
             }
         }
-        do Sys.wait(200);
+
         do Sys.wait(gSpeed);  // delays the next movement
         return;
     }

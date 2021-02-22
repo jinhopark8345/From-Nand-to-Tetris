@@ -116,6 +116,12 @@ pop temp 0
 label IF_FALSE0
 push constant 0
 return
+function Snake.getHead 0
+push argument 0
+pop pointer 0
+push this 0
+call List.getHead 1
+return
 function Snake.snake_addHeadDown 3
 push argument 0
 pop pointer 0
