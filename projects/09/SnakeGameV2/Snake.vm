@@ -16,16 +16,288 @@ call Math.divide 2
 push constant 2
 sub
 pop this 4
-push constant 10
-push constant 10
+push argument 0
+push argument 1
 call List.new 2
 pop this 0
 push constant 1
 pop this 1
 push pointer 0
-call Snake.drawSnake 1
+call Snake.drawHead 1
 pop temp 0
 push pointer 0
+return
+function Snake.temp_addAtHead 1
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push argument 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push argument 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 0
+call List.addAtHead 2
+pop temp 0
+push constant 0
+return
+function Snake.snake_addHeadUp 3
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 1
+push constant 2
+call Array.new 1
+pop local 2
+push this 0
+call List.getHead 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 2
+add
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 2
+add
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push constant 1
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 2
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Snake.snake_addHeadDown 3
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 1
+push constant 2
+call Array.new 1
+pop local 2
+push this 0
+call List.getHead 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push this 4
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 2
+add
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 2
+add
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push constant 1
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 2
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Snake.snake_addHeadLeft 3
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 1
+push constant 2
+call Array.new 1
+pop local 2
+push this 0
+call List.getHead 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 2
+add
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push constant 1
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 2
+add
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 2
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Snake.snake_addHeadRight 3
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 1
+push constant 2
+call Array.new 1
+pop local 2
+push this 0
+call List.getHead 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push this 3
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 2
+add
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push constant 1
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 2
+add
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 2
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+label IF_FALSE0
+push constant 0
 return
 function Snake.dispose 0
 push argument 0
@@ -94,5 +366,376 @@ call Node.getNext 1
 pop local 0
 goto WHILE_EXP0
 label WHILE_END0
+push constant 0
+return
+function Snake.drawHead 2
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 1
+push this 0
+call List.getHead 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push this 2
+add
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Snake.eraseTail 2
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 1
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+call List.getTail 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push this 2
+add
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push this 2
+call Math.multiply 2
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Snake.moveUp 5
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 0
+push constant 2
+call Array.new 1
+pop local 1
+push this 0
+call List.getHead 1
+pop local 2
+push local 2
+call Node.getData 1
+pop local 0
+push constant 0
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 3
+push constant 1
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 4
+push local 4
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 1
+add
+push local 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 1
+add
+push local 4
+push constant 1
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 1
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+push pointer 0
+call Snake.eraseTail 1
+pop temp 0
+push this 0
+call List.delFromTail 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Snake.moveDown 5
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 0
+push constant 2
+call Array.new 1
+pop local 1
+push this 0
+call List.getHead 1
+pop local 2
+push local 2
+call Node.getData 1
+pop local 0
+push constant 0
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 3
+push constant 1
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 4
+push local 4
+push this 4
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 1
+add
+push local 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 1
+add
+push local 4
+push constant 1
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 1
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+push pointer 0
+call Snake.eraseTail 1
+pop temp 0
+push this 0
+call List.delFromTail 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Snake.moveLeft 5
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 0
+push constant 2
+call Array.new 1
+pop local 1
+push this 0
+call List.getHead 1
+pop local 2
+push local 2
+call Node.getData 1
+pop local 0
+push constant 0
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 3
+push constant 1
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 4
+push local 3
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 1
+add
+push local 3
+push constant 1
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 1
+add
+push local 4
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 1
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+push pointer 0
+call Snake.eraseTail 1
+pop temp 0
+push this 0
+call List.delFromTail 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Snake.moveRight 5
+push argument 0
+pop pointer 0
+push constant 2
+call Array.new 1
+pop local 0
+push constant 2
+call Array.new 1
+pop local 1
+push this 0
+call List.getHead 1
+pop local 2
+push local 2
+call Node.getData 1
+pop local 0
+push constant 0
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 3
+push constant 1
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 4
+push local 3
+push this 3
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push local 1
+add
+push local 3
+push constant 1
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 1
+add
+push local 4
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 0
+push local 1
+call List.addAtHead 2
+pop temp 0
+push pointer 0
+call Snake.drawHead 1
+pop temp 0
+push pointer 0
+call Snake.eraseTail 1
+pop temp 0
+push this 0
+call List.delFromTail 1
+pop temp 0
+label IF_FALSE0
 push constant 0
 return

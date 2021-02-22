@@ -1,6 +1,6 @@
 function Main.main 1
-push constant 3
-push constant 4
+push constant 20
+push constant 7
 push constant 16
 push constant 50
 call SnakeGame.new 4

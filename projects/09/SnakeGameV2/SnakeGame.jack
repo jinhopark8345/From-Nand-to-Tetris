@@ -26,6 +26,7 @@ class SnakeGame {
     field int tempX;
     field int tempY;
     field int tempCnt;
+    field int increaseI;
 
     field Array tempBody;
 
@@ -37,6 +38,8 @@ class SnakeGame {
         let direction = 0;  // initial state is no movement
         // let food = Food.new(squareSize, 3);
 
+        let i = 0;
+        let increaseI = 10;
         return this;
     }
 
@@ -106,84 +109,40 @@ class SnakeGame {
 
     /** Moves the snake in the current direction. */
     method void moveSnake() {
-        // if (direction = 1) {
-        //     let temp = isEmpty(0,-1);
-        //     if (temp = 1){
-        //         do snake.moveUp();
-        //     } else {
-        //         if(temp = 2){
-        //             // game over
-        //             // do Output.printString("Game Over");
-        //             // do snake.moveDown();
-        //         } else { // temp = 3
-        //             do snake.getBigger(0, -1);
-        //             do snake.moveUp();
-        //         }
-        //     }
-        // }
-        // if (direction = 2) {
-        //     let temp = isEmpty(0,1);
-
-        //     if (temp = 1){
-        //         do snake.moveDown();
-
-        //     } else {
-        //         if(temp = 2){
-        //             // game over
-        //             // do Output.printString("Game Over");
-        //             // do snake.moveDown();
-        //         } else { // temp = 3
-        //             do snake.getBigger(0, 1);
-        //             do snake.moveDown();
-        //         }
-        //     }
-        // }
-        // if (direction = 3) {
-        //     let temp = isEmpty(-1,0);
-        //     if (temp = 1){
-        //         do snake.moveLeft();
-        //     } else {
-        //         if(temp = 2){
-        //             // game over
-        //             // do Output.printString("Game Over");
-        //             // do snake.moveDown();
-        //         } else { // temp = 3
-        //             do snake.getBigger(-1, 0);
-        //             do snake.moveLeft();
-        //         }
-        //     }
-        // }
-        // if (direction = 4) {
-
-        //     let temp = isEmpty(1,0);
-        //     if (temp = 1){
-        //         do snake.moveRight();
-        //     } else {
-        //         if(temp = 2){
-        //             // game over
-        //             // do Output.printString("Game Over");
-        //             // do snake.moveDown();
-        //         } else { // temp = 3
-        //             do snake.getBigger(1, 0);
-        //             do snake.moveRight();
-        //         }
-        //     }
-        // }
-        // do Sys.wait(gSpeed);  // delays the next movement
-
         if (direction = 1) {
             do snake.moveUp();
+            let i = i+1;
+            if (i = increaseI){
+                do snake.snake_addHeadUp();
+                let i = 0;
+            }
         }
         if (direction = 2) {
             do snake.moveDown();
+            let i = i+1;
+            if (i =increaseI){
+                do snake.snake_addHeadDown();
+                let i = 0;
+            }
         }
 
         if (direction = 3) {
             do snake.moveLeft();
+            let i = i+1;
+            if (i =increaseI){
+                do snake.snake_addHeadLeft();
+                let i = 0;
+            }
         }
         if (direction = 4) {
             do snake.moveRight();
+            let i = i+1;
+            if (i =increaseI){
+                do snake.snake_addHeadRight();
+                let i = 0;
+            }
         }
+        do Sys.wait(200);
         do Sys.wait(gSpeed);  // delays the next movement
         return;
     }

@@ -12,14 +12,108 @@ class Snake{
         let sqSize = squareSize;
         let boundX = (512 / sqSize) - 2;
         let boundY = (256 / sqSize) - 2;
-        let body = List.new(10,10);
+        let body = List.new(sx, sy);
         let sLen = 1;
 
+        do drawHead();
 
-        do drawSnake();
+        // do snake_addAtHead(1, 0);
+        // do snake_addAtHead(1, 0);
+        // do snake_addAtHead(1, 0);
+
 
         return this;
     }
+
+    method void temp_addAtHead(int x, int y){
+        var Array tempArr;
+        let tempArr = Array.new(2);
+        let tempArr[0] = x;
+        let tempArr[1] = y;
+        do body.addAtHead(tempArr);
+
+        return;
+    }
+
+    method void snake_addHeadUp(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[1] > 0) {
+            let newHead[0] = data[0];
+            let newHead[1] = data[1]-1;
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+
+        return;
+    }
+    method void snake_addHeadDown(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[1] < boundY){
+            let newHead[0] = data[0];
+            let newHead[1] = data[1]+1;
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+        return;
+    }
+
+    method void snake_addHeadLeft(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[0] > 0) {
+            let newHead[0] = data[0] - 1;
+            let newHead[1] = data[1];
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+        return;
+    }
+    method void snake_addHeadRight(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[0] < boundX) {
+            let newHead[0] = data[0] + 1;
+            let newHead[1] = data[1];
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+        return;
+    }
+
 
     method void dispose() {
         do Memory.deAlloc(this);
@@ -39,6 +133,194 @@ class Snake{
                                     data[0]*sqSize + sqSize, data[1]*sqSize + sqSize);
             let node = node.getNext();
         }
+        return;
+    }
+
+    method void drawHead(){
+        var Node node;
+        var Array data;
+        let data = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        // do Output.printString("drawHead: ");
+        // do Output.printInt(data[0]);
+        // do Output.printString(", ");
+        // do Output.printInt(data[1]);
+        // do Output.println();
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(data[0]*sqSize,
+                                data[1]*sqSize,
+                                data[0]*sqSize + sqSize,
+                                data[1]*sqSize + sqSize);
+        return;
+    }
+
+    method void eraseTail(){
+        var Node node;
+        var Array data;
+        let data = Array.new(2);
+        do Screen.setColor(false);
+
+        let node = body.getTail();
+        let data = node.getData();
+        do Screen.drawRectangle(data[0]*sqSize,
+                                data[1]*sqSize,
+                                data[0]*sqSize + sqSize,
+                                data[1]*sqSize + sqSize);
+
+        return;
+    }
+
+    method void moveUp(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+
+        // do Output.printString("moveUP: ");
+        // do Output.printInt(headX);
+        // do Output.printString(", ");
+        // do Output.printInt(headY);
+        // do Output.printChar(32);
+        // do Output.println();
+
+
+        if (headY > 0){
+
+            let newHead[0] = headX;
+            let newHead[1] = headY - 1;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+
+    method void moveDown(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+
+        // do Output.printString("moveDown: ");
+        // do Output.printInt(headX);
+        // do Output.printString(", ");
+        // do Output.printInt(headY);
+        // do Output.printChar(32);
+        // do Output.println();
+
+
+        if (headY < boundY){
+
+            let newHead[0] = headX;
+            let newHead[1] = headY + 1;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+    method void moveLeft(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+
+        // do Output.printString("moveDown: ");
+        // do Output.printInt(headX);
+        // do Output.printString(", ");
+        // do Output.printInt(headY);
+        // do Output.printChar(32);
+        // do Output.println();
+
+
+        if (headX > 0){
+
+            let newHead[0] = headX -1;
+            let newHead[1] = headY;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+    method void moveRight(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+
+        // do Output.printString("moveDown: ");
+        // do Output.printInt(headX);
+        // do Output.printString(", ");
+        // do Output.printInt(headY);
+        // do Output.printChar(32);
+        // do Output.println();
+
+
+        if (headX < boundX){
+
+            let newHead[0] = headX + 1;
+            let newHead[1] = headY;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
         return;
     }
 }
