@@ -2647,7 +2647,7 @@ And we see that ~in this particular example~, if you look at the high level code
 #+ATTR_ORG: :width 600
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Stack_arithmetic/2021-01-27_20-32-34_screenshot.png]]
-*** Question
+*** Quiz
 The execution of which of the following VM command(s) changes the state of the stack?
 
 - goto
@@ -2826,7 +2826,7 @@ information that belongs to my caller.
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-01-29_15-19-53_screenshot.png]]
 
-*** Question
+*** Quiz
 Suppose that function foo pushes two arguments and calls function bar. After bar
 returns, the two argument values that were pushed before the call have
 disappeared, and the stack’s topmost value is the value returned by bar. Who is
@@ -2869,7 +2869,7 @@ responsible for removing the argument values from the stack?
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-01-29_15-48-07_screenshot.png]]
 
-**** Question
+**** Quiz
 Consider the global stack diagram given below, and assume
 the following pointer values:
 
@@ -2933,7 +2933,7 @@ call command?
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-01-29_16-18-20_screenshot.png]]
 
-*** Question
+*** Quiz
 The implementation of the VM return command starts with two commands that, taken together, store the return address in the temporary variable retAdd.  Which of the following statement(s) is correct?
 
 This is done since, if the function has no arguments, the next command, which is  *arg = pop(), will override the return address.
@@ -3167,7 +3167,7 @@ need to make FibonacciElement.asm file(same as dir name)
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-17-47_screenshot.png]]
 
-*** Question
+*** Quiz
 Q. When we execute a Jack program, the first subroutine that starts running is:
  - main.main
  - main.Main
@@ -3246,7 +3246,7 @@ the subroutine that starts running is Main.main.
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-47-09_screenshot.png]]
 
-***** Question
+***** Quiz
 Which Jack classes should have a method for disposing objects?
 
 
@@ -3306,7 +3306,7 @@ there is no need to worry about object construction and disposal.
 #+ATTR_ORG: :width 300
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-15_23-55-41_screenshot.png]]
-*** Question
+*** Quiz
 
 What does the keyword “this” refers to? Mark the correct answer, or answers
 
@@ -3755,7 +3755,7 @@ constructor of that string variable hasn't called yet.
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-18_18-02-57_screenshot.png]]
 
-**** Question
+**** Quiz
 Suppose that instead of moving a filled square image on the screen, we want to
 move a filled circle image.  Assume that all the other rules of the game remain
 the same. Mark the correct statement(s):
@@ -3892,3 +3892,482 @@ mark-up, compilation.
 
 Relevant (and optional) reading: chapter 10 of The Elements of
 Computing Systems, by Nisan and Schocken, MIT Press.
+
+** Syntax Analysis
+*** two-tier compilation
+
+#+DOWNLOADED: screenshot @ 2021-02-23 10:56:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_10-56-47_screenshot.png]]
+
+*** Compiler development roadmap
+
+#+DOWNLOADED: screenshot @ 2021-02-23 10:58:05
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_10-58-05_screenshot.png]]
+
+*** Module 4: take home lessons
+
+#+DOWNLOADED: screenshot @ 2021-02-23 10:58:17
+#+ATTR_ORG: :width 300
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_10-58-17_screenshot.png]]
+
+** Lexical analysis(Tokenizer)
+*** Tokenizing (first approximation)
+#+DOWNLOADED: screenshot @ 2021-02-23 11:04:42
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-04-42_screenshot.png]]
+
+*** Jack tokens & tokenizer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:10:36
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-10-36_screenshot.png]]
+
+**** tokenizer test
+#+DOWNLOADED: screenshot @ 2021-02-23 11:11:59
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-11-59_screenshot.png]]
+
+**** Quiz
+#+DOWNLOADED: screenshot @ 2021-02-23 11:08:47
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-08-47_screenshot.png]]
+
+** Grammars
+
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:24:57
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-24-57_screenshot.png]]
+
+*** subset and examples #1
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:43:18
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-43-18_screenshot.png]]
+
+*** subset and parsing
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:45:59
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-45-59_screenshot.png]]
+
+
+*** quiz
+#+DOWNLOADED: screenshot @ 2021-02-23 11:45:33
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-45-33_screenshot.png]]
+
+** Parse Trees
+*** Parse tree: English
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:48:02
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-48-02_screenshot.png]]
+*** Quiz
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:55:09
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-55-09_screenshot.png]]
+
+1. normal
+2. verb phrase: like
+3. verb phrase: time
+
+*** Parse tree: Jack
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:56:51
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-56-51_screenshot.png]]
+
+**** detail
+
+#+DOWNLOADED: screenshot @ 2021-02-23 11:58:28
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_11-58-28_screenshot.png]]
+
+** Parser Logic
+
+#+DOWNLOADED: screenshot @ 2021-02-23 16:31:00
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_16-31-00_screenshot.png]]
+
+*** example
+**** 1
+#+DOWNLOADED: screenshot @ 2021-02-23 16:32:48
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_16-32-48_screenshot.png]]
+
+**** 2
+
+#+DOWNLOADED: screenshot @ 2021-02-23 16:37:43
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_16-37-43_screenshot.png]]
+
+*** Parser design
+
+#+DOWNLOADED: screenshot @ 2021-02-23 16:40:47
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_16-40-47_screenshot.png]]
+
+*** Some observations about grammars and parsing
+
+#+DOWNLOADED: screenshot @ 2021-02-23 16:43:27
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_16-43-27_screenshot.png]]
+
+*** Quiz
+Consider the following statements, taken from three different Jack programs. In each one of these programs, the identifier foo represents a different thing:
+
+#+begin_src jack
+let x = 5 + foo - a       // program 1. Here foo represents a simple variable.
+let y = foo[12] - 3     // program 2. Here foo represents an array.
+let z = 2 * foo.val()   // program 3. Here foo represents an object.
+#+end_src
+
+Question:
+    Suppose that we are parsing any one of these statements (we don’t know which), and that the current token is foo.  How many more tokens do we have to read until we can tell that what we have is a simple variable, an array reference, or a method call?
+
+Answer:
+    One.
+
+explanation:
+    We have to read one more token.  If it’s ‘[‘, we know that we have an array reference. If it’s ‘.’, we know that we have a method call. Otherwise, it must be a simple variable.  This is the only case in the Jack language in which the parser has to look ahead one more token.  Except for this case, Jack is an LL(1) language.  We will have more to say about this exception later in the next unit.
+
+** The Jack Grammar
+
+#+DOWNLOADED: screenshot @ 2021-02-23 16:59:46
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_16-59-46_screenshot.png]]
+
+*** Jack grammar
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:01:21
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-01-21_screenshot.png]]
+
+**** lexical elements
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:02:26
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-02-26_screenshot.png]]
+
+**** program structure
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:06:53
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-06-53_screenshot.png]]
+
+**** Statements
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:07:39
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-07-39_screenshot.png]]
+
+**** Expressions
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:10:24
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-10-24_screenshot.png]]
+
+***** quiz
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:10:05
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-10-05_screenshot.png]]
+
+**** End note: parsing
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:25:39
+#+ATTR_ORG: :width 800
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-25-39_screenshot.png]]
+
+**** End note: parsing expressions
+
+#+DOWNLOADED: screenshot @ 2021-02-23 17:27:51
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_17-27-51_screenshot.png]]
+
+** The Jack Analyzer
+
+*** unit test the analyzer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 19:58:12
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_19-58-12_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-23 19:59:46
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_19-59-46_screenshot.png]]
+
+*** Handling inputs that corresponds to terminal rules
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:01:25
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-01-25_screenshot.png]]
+
+*** Handling inputs that corresponds to non-terminal rules
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:05:27
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-05-27_screenshot.png]]
+**** Quiz
+Q. XML code is structured as a:
+(This question can be answered only if you are familiar with the data structures mentioned above)
+
+A.
+ - Multi-dimensional array
+ - Tree / answer
+ - Graph
+ - Stack
+
+Correct
+XML code is hierarchical: each term is nested within at most one term. In other word, each term has exactly one “parent”, except for the outer most term, which is “the root”.  With that in mind, XML code is structured as a tree.
+
+**** variable name
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:07:37
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-07-37_screenshot.png]]
+
+** Proposed Implementation
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:13:05
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-13-05_screenshot.png]]
+
+*** Jack Analyzer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:14:29
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-14-29_screenshot.png]]
+
+**** JackAnalyzer in action
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:15:23
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-15-23_screenshot.png]]
+
+*** Jack Tokenizer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:17:05
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-17-05_screenshot.png]]
+
+**** API
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:45:14
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-45-14_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-23 20:51:25
+#+ATTR_ORG: :width 800
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-51-25_screenshot.png]]
+
+*** Compilation Engine
+**** design
+#+DOWNLOADED: screenshot @ 2021-02-23 20:55:11
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_20-55-11_screenshot.png]]
+
+**** API
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:11:02
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-11-02_screenshot.png]]
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:12:04
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-12-04_screenshot.png]]
+
+**** end note
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:13:12
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-13-12_screenshot.png]]
+
+*** Jack Analyzer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:17:35
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-17-35_screenshot.png]]
+
+*** Quiz
+Select the correct statement(s):
+
+
+- The CompilationEngine has one compileXXX method for each rule in the Jack  grammar
+- The CompilationEngine must be a recursive program (The CompilationEngine must be recursive. For example, it may be called to handle a while loop within another while loop.) / Answer
+- The tokenizing logic (how to group characters into tokens) is part of the CompilationEngine logic
+- The CompilationEngine must be written in assembly language
+
+** Building a Syntax Analyzer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:50:26
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-50-26_screenshot.png]]
+
+*** Implementation plan
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:51:10
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-51-10_screenshot.png]]
+
+*** Jack Tokenizer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:54:09
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-54-09_screenshot.png]]
+
+*** Jack analyzer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:55:19
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-55-19_screenshot.png]]
+
+1. build a basic ~CompilationEngine~ that handles everything except expressions
+2. add the handling of expressions (we supply test files to unit-test both
+   stages)
+
+*** Sample test class file (expressionless version)
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:58:26
+#+ATTR_ORG: :width 700
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-58-26_screenshot.png]]
+
+*** Basic Jack Analyzer
+
+#+DOWNLOADED: screenshot @ 2021-02-23 21:58:54
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_21-58-54_screenshot.png]]
+
+*** Reminder: handling expressions
+
+#+DOWNLOADED: screenshot @ 2021-02-23 22:01:12
+#+ATTR_ORG: :width 600
+#+ATTR_LATEX: :width 5.5in
+[[file:/home/jinho/Dropbox/org/pictures/Module#10_-_Compiler_1:_Syntax_Analysis/2021-02-23_22-01-12_screenshot.png]]
+
+** Perspective
+
+*** Compilers don't only translate programs, they also find and report errors. Are we going to handle errors in our Jack compiler?
+
+Well, ~error diagnostics is something that we decided to completely sidestep in this module~. In other words, we assumed, quite naively, I must say, that the source code that we have to compile is error free.
+
+So what should we do if we were to remove this simplifying assumption? Well, in some cases, catching an error is a simple matter. For example, suppose that you parse a let statement, L-E-T. According to the Jack grammar, the keyword let must be followed by an identifier,
+
+as in, say, let x equals something. So x is an identifier.
+
+So when your parser handles a let token, it should expect that the next token should be an identifier. And if the next token is anything but an identifier, you can generate an error message and terminate the compilation right there.
+
+However, normally, compilers try to be more friendly and they don't stop dead in their tracks whenever they find an error. Instead, a clever compiler attempts to somehow contain the damage that was caused by the current error and proceed to catch and report additional possible errors in your code.
+
+Also, a clever compiler makes a best effort to try to sort of pinpoint the exact location in the source code where the error was conceived, so to speak. And this location is not necessarily the same place where the error raised its head, or was detected by the compiler. So, as you see, error handling is an intricate art that requires sophisticated diagnostics methods and intricate code, none of which were discussed in NAND to Tetris.
+
+*** Can we use the techniques that we learned in this module to develop parsers for other programming languages?
+Let me start by saying that parsers are quite useful, not only for parsing
+programs, but also for parsing any syntax-based text, which happens a lot in the
+careers of many application programmers. There are numerous applications out
+there, ranging from bioinformatics to email to financial services in which you
+have to handle, analyze, and render structured text. And the techniques that we
+learned in this module are directly applicable to any of these
+applications. Specifically, throughout the module, we covered and developed the
+two most important elements of syntax analysis. And they are tokenizing and
+parsing.
+
+
+So in that respect, you now have a solid hands-on understanding of the essence
+of what it takes to do syntax analysis. However, compared to other programming
+languages that you are familiar with, the language that we handled, Jack, is
+deliberately simple.
+
+It has neither operator priority nor inheritance nor many other features that
+can be found in industrial strength programming languages. Now, this limited
+design was obviously done on purpose, because our goal was to be able to develop
+a Jack compiler using simple and elegant parsing algorithms. In particular, the
+parsing algorithm that we discussed in this module builds the parse tree from
+the top down.
+
+It reads as few tokens as possible, and it tries to determine which language
+construct we are parsing as soon as it can make this determination.
+
+~Parsers that employ this top-down greedy parsing strategy are quite suitable for
+languages that have a simple syntax.~ And yet, when compiler developers have to
+parse languages that have a more elaborate syntax, they typically resort to
+using something known as bottom-up parsing, which is quite different.
+
+This parsing strategy ~starts bottom-up by first building the terminal leaves of the parse tree, and they defer the decision of which language construct we are dealing with to a later stage in the parsing process~. This way, they can entertain simultaneously several parsing possibilities. But in order to do this, these algorithms have to use ~backtracking~. And the result is parsing logic which is harder to develop than the simple top-down parsing that we used in this module. Which, once again, is applicable to numerous applications and to simple languages, but not necessarily for languages like Java and C++. As usual, there are numerous topics, in this case in compilation and formal languages, which are simply outside the highly focused scope of NAND to Tetris. Now, if you find compilation and computational linguistics interesting, then by now, I think that we gave you a solid foundation to build on. And you're obviously welcome to consider taking either a compilation course or buying some decent book about it.
+
+*** Why didn't we use lex and yacc?
+lex and yacc are two software tools that come from the world of Unix.
+
+And by now, there are numerous versions of these two tools that have different names and flavors, and they are implemented in many different programming languages.
+
+~Lex stands for Lexical Analyzer,~ which actually refers to a tool which is
+capable of generating ~tokenizing~ code automatically. And ~yacc~ stands for the
+~whimsical, Yet Another Compiler Compiler,~ which actually refers to a tool
+which is capable of ~generating parsing code automatically~.
+
+Typically, lex and yacc go together and are quite inseparable. So where do these tools come from?
+
+Well, many good programmers are lazy, they're lazy in the positive sense of the word, and they seek to automate whatever can be automated. Now, as you may have noticed, and I'm sure you did, the parsing logic that we outlined throughout this module, which by the way, was given as a recipe for developing your parser, well, this parsing logic was highly structured. In particular, we advised that for each production rule in the Jack grammar, you guys should develop a corresponding parsing method In your syntax analyzer. And taken, together all these parsing methods comprise this analyzer.
+
+Now, it turns out that this software development strategy that we exposed in this module is so structured that indeed it can be generalized to other grammars and automated.
+
+In other words, if you have a well-defined grammar of some language, or some file format or whatever, and you can specify this grammar using some agreed upon machine readable format, then indeed, you can write a program that takes this grammar specification as input and produces from it automatically a syntax analyzer which is written in some language like C or Java or whatnot. Now, of course, you will have to get into the generated code and make all sorts of changes here and there. But most of the logic can be generated automatically by lex and yacc kind of tools. And so that's what these tools are all about. They generate syntax analysis code that can be customized and developed into a full scale syntax analysis tool.
+
+So let's go back to the question. Why did we insist on developing the tokenizer and the parser from scratch, where in fact, we could have used these automatic tools and make our life much simpler?
+
+Well, I suspect that you know the answer. ~NAND to Tetris is about doing everything from scratch from the ground up in your bare hands in order to explore and understand. Using black box tools like lex and yacc go against the NAND to Tetris spirit. And that's why we decided not to use them~.
