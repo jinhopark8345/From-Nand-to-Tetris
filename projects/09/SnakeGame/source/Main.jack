@@ -1,0 +1,26 @@
+class Main {
+
+    field int temp;
+
+    function void main() {
+        // var Test test;
+        // let test = Test.new();
+        // do test.testAddAtTail();
+        // do test.testAddAtHead();
+        // do test.testAdd();
+        // do test.testDelete();
+
+        // var Snake s;
+        // let s = Snake.new(10,15, 8);
+
+        var SnakeGame game;
+        // 512 x 256, square size should be 2 ** n
+        let game = SnakeGame.new(20, 10, 16, 50);
+        do game.run();
+        do game.dispose();
+
+
+        return ;
+    }
+
+}

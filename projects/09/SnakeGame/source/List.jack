@@ -1,0 +1,116 @@
+
+// Implements Linkedlist with head and tail lookup functions
+class List {
+    field Node head;
+    field Node tail;
+
+    constructor List new(int sx, int sy) {
+        var Array arr;
+        let arr = Array.new(2);
+        let arr[0] = sx; // sx
+        let arr[1] = sy; // sy
+
+        do addAtTail(arr);
+
+        return this;
+    }
+
+    method Node getHead() { return head; }
+    method Node getTail() { return tail; }
+    method void setHead(Node h) { let head = h; return;}
+    method void setTail(Node t) { let tail = t; return;}
+
+    // /** Prints this list. */
+    method void print() {
+        // var Node currentHead;    // initializes current to the first item
+        // let currentHead = getHead();  // of this list
+        var Node node;
+        var Array data;
+        let node = getHead();
+        while (~(node = null)) {
+            let data = node.getData();
+
+            do Output.printInt(data[0]);
+            do Output.printChar(32); // prints a space
+            do Output.printInt(data[1]);
+            do Output.printChar(32); // prints a space
+            let node = node.getNext();
+        }
+        return;
+    }
+
+    //Create node and return reference of it.
+    method List createNode(Array data){
+        var Node node;
+        let node = Node.new(data, null);
+        return node;
+    }
+
+    //Add new item at the end of list.
+    method void addAtTail(Array data){
+        // var int tempNext;
+        var Node node;
+        let node = createNode(data);
+
+        if (head = null) {
+            let head = node;
+            let tail = node;
+        } else {
+            // do setTail(tail.getNext());
+            // let tail = tail.getNext();
+
+            do tail.setNext(node);
+            let tail = node;
+        }
+
+        return;
+    }
+
+    method void addAtHead(Array data) {
+        var Node node;
+        let node = createNode(data);
+
+        if(head = null){
+            let head = node;
+            let tail = node;
+        }
+        else{
+            do node.setNext(head);
+            let head = node;
+        }
+
+        return;
+    }
+    // delete data from the end of list
+    method void delFromTail(){
+
+        var Node node;
+        if (tail = null) {
+            // list is empty
+            do Output.printString("try to delete empty tail");
+        }
+        else {
+            let node = head;
+
+            while (~(node.getNext() = tail))
+            { let node = node.getNext();}
+
+
+            let tail = node;
+            do tail.setNext(null);
+        }
+
+        return ;
+    }
+
+
+    /** Disposes this List by recursively disposing its tail. */
+    method void dispose() {
+        if (~(tail = null)) {
+            do next.dispose();
+        }
+        // Uses an OS routine to recycle this object.
+        do Memory.deAlloc(this);
+        return;
+    }
+}

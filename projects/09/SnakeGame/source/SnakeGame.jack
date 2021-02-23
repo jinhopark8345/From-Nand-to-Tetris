@@ -1,0 +1,175 @@
+
+/**
+ * Implements the snake game.
+ * This simple game allows the user to move a snake around the screen,
+ * eat food and make the snake longer. and when the snake eats all the food,
+ * game will be over.
+ */
+
+class SnakeGame {
+    field Snake snake; // the square of this game
+    field Food food;
+    field int direction; // the square's current direction:
+                        // 0=none, 1=up, 2=down, 3=left, 4=right
+    field int gSpeed;
+    field Food food;
+
+    field Array tempBody;
+
+    /** Constructs a new Snake Game. */
+    constructor SnakeGame new(int sx, int sy, int squareSize, int gameSpeed) {
+        // Creates a 30 by 30 pixels square and positions it at the top-left
+        // of the screen.
+        let snake = Snake.new(sx, sy, squareSize);
+        let food = Food.new(squareSize, 3);
+        let direction = 0;  // initial state is no movement
+        // let food = Food.new(squareSize, 3);
+        let gSpeed = gameSpeed;
+
+        return this;
+    }
+
+    /** Disposes this game. */
+    method void dispose() {
+        do snake.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+
+    // check if the next location of the screen is empty
+    method int isEmpty(int x, int y){
+        // check if snake body is on the way
+        var Node node;
+        var Array curNodeData;
+        var int nextHeadX;
+        var int nextHeadY;
+        var int i;
+        var Array tempFood;
+        var int foodLen;
+
+        let curNodeData = Array.new(2);
+        let node = snake.getHead();
+        let curNodeData = node.getData();
+        let nextHeadX = curNodeData[0] + x;
+        let nextHeadY = curNodeData[1] + y;
+
+        // check if the snake body is on the way
+        while(~(node = null)){
+            let curNodeData = node.getData();
+            if (curNodeData[0] = nextHeadX){
+                if (curNodeData[1] = nextHeadY){
+                    do Output.printString("game over");
+                    do Output.println();
+                    return -1;
+                }
+            }
+            let node = node.getNext();
+        }
+
+        let i = 0;
+        let foodLen = food.getFoodLen();
+        let tempFood = Array.new(2*foodLen);
+        let tempFood = food.getFood();
+
+        // check if food is on the way
+        while(i < foodLen){
+            if (tempFood[i*2] = nextHeadX){
+                if (tempFood[i*2+1] = nextHeadY){
+
+                    // remove food from the screen: don't need to
+                    // do anything because snake will pass by and food
+                    // will be removed automatically.
+
+                    // replace the food data with the new one and
+                    // draw new food on the screen
+                    do food.drawFood(i);
+
+                    return 2; // return 3 when it was a food
+                }
+            }
+
+            let i = i+1;
+        }
+
+        return 1;
+    }
+
+
+
+    /** Moves the snake in the current direction. */
+    method void moveSnake() {
+        var int whatsnext;
+        if (direction = 1) {
+            let whatsnext = isEmpty(0, -1);
+            // when the next pos is empty
+            if(whatsnext = 1){
+                do snake.moveUp();
+            }
+            // when the next pos is food
+            if(whatsnext = 2){
+                do snake.snake_addHeadUp();
+            }
+        }
+        if (direction = 2) {
+            let whatsnext = isEmpty(0, 1);
+            if(whatsnext = 1){
+                do snake.moveDown();
+            }
+            if(whatsnext = 2){
+                do snake.snake_addHeadDown();
+            }
+        }
+
+        if (direction = 3) {
+            let whatsnext = isEmpty(-1, 0);
+            if(whatsnext = 1){
+                do snake.moveLeft();
+            }
+            if(whatsnext = 2){
+                do snake.snake_addHeadLeft();
+            }
+        }
+        if (direction = 4) {
+            let whatsnext = isEmpty(1, 0);
+            if(whatsnext = 1){
+                do snake.moveRight();
+            }
+            if(whatsnext = 2){
+                do snake.snake_addHeadRight();
+            }
+        }
+
+        do Sys.wait(gSpeed);  // delays the next movement
+        return;
+    }
+
+    /** Runs the game: handles the user's inputs and moves the snake accordingly */
+    method void run() {
+        var char key;  // the key currently pressed by the user
+        var boolean exit;
+        let exit = false;
+
+        while (~exit) {
+            // waits for a key to be pressed
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do moveSnake();
+            }
+        if (key = 81)  { let exit = true; }     // q key
+        // if (key = 90)  { do snake.decSize(); } // z key
+        // if (key = 88)  { do snake.incSize(); } // x key
+        if (key = 131) { let direction = 1; }   // up arrow
+        if (key = 133) { let direction = 2; }   // down arrow
+        if (key = 130) { let direction = 3; }   // left arrow
+        if (key = 132) { let direction = 4; }   // right arrow
+
+            // waits for the key to be released
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveSnake();
+            }
+        } // while
+        return;
+    }
+}

@@ -1,0 +1,297 @@
+
+/**
+ * Implements the snake body.
+ * this class will allow SnakeGame class to modify snake head and tail
+ */
+
+class Snake{
+
+    field List body;
+    field int sLen; // current snake length
+    field int sqSize; // square size
+
+
+    // boundary of the screen
+    field int boundX;
+    field int boundY;
+
+    constructor Snake new(int sx, int sy, int squareSize) {
+        let sqSize = squareSize;
+        let boundX = (512 / sqSize) - 2;
+        let boundY = (256 / sqSize) - 2;
+        let body = List.new(sx, sy);
+        let sLen = 1;
+
+        do drawHead();
+
+        return this;
+    }
+
+
+    method Node getHead(){return body.getHead();}
+
+    // when snake goes up and eats food, this function
+    // will be called and snake body will be extended
+    method void snake_addHeadUp(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[1] > 0) {
+            let newHead[0] = data[0];
+            let newHead[1] = data[1]-1;
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+
+        return;
+    }
+
+    // when snake goes down and eats food, this function
+    // will be called and snake body will be extended
+    method void snake_addHeadDown(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[1] < boundY){
+            let newHead[0] = data[0];
+            let newHead[1] = data[1]+1;
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+        return;
+    }
+
+    // when snake goes left and eats food, this function
+    // will be called and snake body will be extended
+    method void snake_addHeadLeft(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[0] > 0) {
+            let newHead[0] = data[0] - 1;
+            let newHead[1] = data[1];
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+        return;
+    }
+
+    // when snake goes right and eats food, this function
+    // will be called and snake body will be extended
+    method void snake_addHeadRight(){
+        var Node node;
+        var Array data;
+        var Array newHead;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+
+        if (data[0] < boundX) {
+            let newHead[0] = data[0] + 1;
+            let newHead[1] = data[1];
+            do body.addAtHead(newHead);
+            do drawHead();
+        }
+
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void drawSnake() {
+        var Node node;
+        var Array data;
+
+        do Screen.setColor(true);
+
+        let node = body.getHead();
+        while (~(node = null)) {
+            let data = node.getData();
+            do Screen.drawRectangle(data[0]*sqSize, data[1]*sqSize,
+                                    data[0]*sqSize + sqSize, data[1]*sqSize + sqSize);
+            let node = node.getNext();
+        }
+        return;
+    }
+
+
+    // draw head of the snake on the screen
+    method void drawHead(){
+        var Node node;
+        var Array data;
+        let data = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        do Screen.setColor(true);
+        do Screen.drawRectangle(data[0]*sqSize,
+                                data[1]*sqSize,
+                                data[0]*sqSize + sqSize,
+                                data[1]*sqSize + sqSize);
+        return;
+    }
+
+    // erase tail from the screen
+    method void eraseTail(){
+        var Node node;
+        var Array data;
+        let data = Array.new(2);
+        do Screen.setColor(false);
+
+        let node = body.getTail();
+        let data = node.getData();
+        do Screen.drawRectangle(data[0]*sqSize,
+                                data[1]*sqSize,
+                                data[0]*sqSize + sqSize,
+                                data[1]*sqSize + sqSize);
+
+        return;
+    }
+
+    // when snake goes up and nothing was there and it's inside of the boundary
+    // this function will draw new head and erase tail
+    method void moveUp(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+        if (headY > 0){
+            let newHead[0] = headX;
+            let newHead[1] = headY - 1;
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+
+    // when snake goes down and nothing was there and it's inside of the boundary
+    // this function will draw new head and erase tail
+    method void moveDown(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+        if (headY < boundY){
+
+            let newHead[0] = headX;
+            let newHead[1] = headY + 1;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+
+    // when snake goes left and nothing was there and it's inside of the boundary
+    // this function will draw new head and erase tail
+    method void moveLeft(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+        if (headX > 0){
+
+            let newHead[0] = headX -1;
+            let newHead[1] = headY;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+
+    // when snake goes right and nothing was there and it's inside of the boundary
+    // this function will draw new head and erase tail
+    method void moveRight(){
+        var Array data;
+        var Array newHead;
+        var Node node;
+        var int headX;
+        var int headY;
+        let data = Array.new(2);
+        let newHead = Array.new(2);
+
+        let node = body.getHead();
+        let data = node.getData();
+        let headX = data[0];
+        let headY = data[1];
+
+        if (headX < boundX){
+
+            let newHead[0] = headX + 1;
+            let newHead[1] = headY;
+
+            do body.addAtHead(newHead); // add new position as head, update head
+            do drawHead(); // draw updated head
+
+            do eraseTail(); // erase current tail
+            do body.delFromTail();
+        }
+
+        return;
+    }
+}
