@@ -1,19 +1,20 @@
 function SnakeGame.new 0
-push constant 10
+push constant 6
 call Memory.alloc 1
 pop pointer 0
 push argument 0
 push argument 1
 push argument 2
-push argument 3
-call Snake.new 4
+call Snake.new 3
 pop this 0
-push constant 0
-pop this 2
 push argument 2
 push constant 3
 call Food.new 2
-pop this 1
+pop this 4
+push constant 0
+pop this 2
+push argument 3
+pop this 3
 push pointer 0
 return
 function SnakeGame.dispose 0
@@ -27,160 +28,160 @@ call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
-function SnakeGame.isEmpty 0
+function SnakeGame.isEmpty 7
 push argument 0
 pop pointer 0
-push this 0
-call Snake.getSnakeHeadX 1
-pop this 6
-push this 0
-call Snake.getSnakeHeadY 1
-pop this 7
-push constant 0
-pop this 5
-push constant 0
-pop this 8
-push this 0
-call Snake.getSnakeLength 1
-pop this 4
-push this 0
-call Snake.getSnakeBody 1
-pop this 9
-label WHILE_EXP0
-push this 5
-push this 4
-lt
-not
-if-goto WHILE_END0
-push this 5
 push constant 2
-call Math.multiply 2
-push this 9
+call Array.new 1
+pop local 1
+push this 0
+call Snake.getHead 1
+pop local 0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 0
+push local 1
 add
 pop pointer 1
 push that 0
-push this 6
-eq
 push argument 1
 add
+pop local 2
+push constant 1
+push local 1
+add
+pop pointer 1
+push that 0
+push argument 2
+add
+pop local 3
+label WHILE_EXP0
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END0
+push local 0
+call Node.getData 1
+pop local 1
+push constant 0
+push local 1
+add
+pop pointer 1
+push that 0
+push local 2
+eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 5
-push constant 2
-call Math.multiply 2
 push constant 1
-add
-push this 9
+push local 1
 add
 pop pointer 1
 push that 0
-push this 7
+push local 3
 eq
-push argument 2
-add
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 8
+push constant 9
+call String.new 1
+push constant 103
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 109
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 118
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+call Output.println 0
+pop temp 0
 push constant 1
-add
-pop this 8
-push this 8
+neg
+return
+label IF_FALSE1
+label IF_FALSE0
+push local 0
+call Node.getNext 1
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+pop local 4
+push this 4
+call Food.getFoodLen 1
+pop local 6
 push constant 2
+push local 6
+call Math.multiply 2
+call Array.new 1
+pop local 5
+push this 4
+call Food.getFood 1
+pop local 5
+label WHILE_EXP1
+push local 4
+push local 6
+lt
+not
+if-goto WHILE_END1
+push local 4
+push constant 2
+call Math.multiply 2
+push local 5
+add
+pop pointer 1
+push that 0
+push local 2
 eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
-push constant 2
-return
-label IF_FALSE2
-label IF_FALSE1
-label IF_FALSE0
-push this 5
-push constant 1
-add
-pop this 5
-goto WHILE_EXP0
-label WHILE_END0
-push constant 0
-pop this 5
-push this 1
-call Food.getFoods 1
-pop this 9
-push this 1
-call Food.getFoodLen 1
-pop this 4
-label WHILE_EXP1
-push this 5
-push this 4
-lt
-not
-if-goto WHILE_END1
-push this 5
+push local 4
 push constant 2
 call Math.multiply 2
-push this 9
+push constant 1
+add
+push local 5
 add
 pop pointer 1
 push that 0
-push this 6
+push local 3
 eq
-push argument 1
-add
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
-push this 5
-push constant 2
-call Math.multiply 2
-push constant 1
-add
-push this 9
-add
-pop pointer 1
-push that 0
-push this 7
-eq
-push argument 2
-add
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
-push this 1
-push this 5
-call Food.removeFood 2
-pop temp 0
-push this 1
-call Food.getFoodLen 1
-pop this 4
 push this 4
-call Output.printInt 1
+push local 4
+call Food.drawFood 2
 pop temp 0
-push this 1
-call Food.getFoodLen 1
-push constant 0
-eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
-push this 1
-call Food.setFoods 1
-pop temp 0
-label IF_FALSE5
-push constant 3
+push constant 2
 return
-label IF_FALSE4
 label IF_FALSE3
-push this 5
+label IF_FALSE2
+push local 4
 push constant 1
 add
-pop this 5
+pop local 4
 goto WHILE_EXP1
 label WHILE_END1
 push constant 1
 return
-function SnakeGame.moveSnake 0
+function SnakeGame.moveSnake 1
 push argument 0
 pop pointer 0
 push this 2
@@ -194,8 +195,8 @@ push constant 0
 push constant 1
 neg
 call SnakeGame.isEmpty 3
-pop this 4
-push this 4
+pop local 0
+push local 0
 push constant 1
 eq
 if-goto IF_TRUE1
@@ -204,27 +205,17 @@ label IF_TRUE1
 push this 0
 call Snake.moveUp 1
 pop temp 0
-goto IF_END1
 label IF_FALSE1
-push this 4
+push local 0
 push constant 2
 eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
-goto IF_END2
+push this 0
+call Snake.snake_addHeadUp 1
+pop temp 0
 label IF_FALSE2
-push this 0
-push constant 0
-push constant 1
-neg
-call Snake.getBigger 3
-pop temp 0
-push this 0
-call Snake.moveUp 1
-pop temp 0
-label IF_END2
-label IF_END1
 label IF_FALSE0
 push this 2
 push constant 2
@@ -236,8 +227,8 @@ push pointer 0
 push constant 0
 push constant 1
 call SnakeGame.isEmpty 3
-pop this 4
-push this 4
+pop local 0
+push local 0
 push constant 1
 eq
 if-goto IF_TRUE4
@@ -246,26 +237,17 @@ label IF_TRUE4
 push this 0
 call Snake.moveDown 1
 pop temp 0
-goto IF_END4
 label IF_FALSE4
-push this 4
+push local 0
 push constant 2
 eq
 if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
-goto IF_END5
+push this 0
+call Snake.snake_addHeadDown 1
+pop temp 0
 label IF_FALSE5
-push this 0
-push constant 0
-push constant 1
-call Snake.getBigger 3
-pop temp 0
-push this 0
-call Snake.moveDown 1
-pop temp 0
-label IF_END5
-label IF_END4
 label IF_FALSE3
 push this 2
 push constant 3
@@ -278,8 +260,8 @@ push constant 1
 neg
 push constant 0
 call SnakeGame.isEmpty 3
-pop this 4
-push this 4
+pop local 0
+push local 0
 push constant 1
 eq
 if-goto IF_TRUE7
@@ -288,27 +270,17 @@ label IF_TRUE7
 push this 0
 call Snake.moveLeft 1
 pop temp 0
-goto IF_END7
 label IF_FALSE7
-push this 4
+push local 0
 push constant 2
 eq
 if-goto IF_TRUE8
 goto IF_FALSE8
 label IF_TRUE8
-goto IF_END8
+push this 0
+call Snake.snake_addHeadLeft 1
+pop temp 0
 label IF_FALSE8
-push this 0
-push constant 1
-neg
-push constant 0
-call Snake.getBigger 3
-pop temp 0
-push this 0
-call Snake.moveLeft 1
-pop temp 0
-label IF_END8
-label IF_END7
 label IF_FALSE6
 push this 2
 push constant 4
@@ -320,8 +292,8 @@ push pointer 0
 push constant 1
 push constant 0
 call SnakeGame.isEmpty 3
-pop this 4
-push this 4
+pop local 0
+push local 0
 push constant 1
 eq
 if-goto IF_TRUE10
@@ -330,27 +302,21 @@ label IF_TRUE10
 push this 0
 call Snake.moveRight 1
 pop temp 0
-goto IF_END10
 label IF_FALSE10
-push this 4
+push local 0
 push constant 2
 eq
 if-goto IF_TRUE11
 goto IF_FALSE11
 label IF_TRUE11
-goto IF_END11
+push this 0
+call Snake.snake_addHeadRight 1
+pop temp 0
 label IF_FALSE11
-push this 0
-push constant 1
-push constant 0
-call Snake.getBigger 3
-pop temp 0
-push this 0
-call Snake.moveRight 1
-pop temp 0
-label IF_END11
-label IF_END10
 label IF_FALSE9
+push this 3
+call Sys.wait 1
+pop temp 0
 push constant 0
 return
 function SnakeGame.run 2

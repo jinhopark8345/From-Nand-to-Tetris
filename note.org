@@ -3867,3 +3867,28 @@ M = D
 
 ** Perspective
 “Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away.”
+
+* Module#10 - Compiler 1: Syntax Analysis
+The translation of a high-level program into a lower-level language
+consists of two well-defined and more or less independent stages:
+~syntax analysis~, and ~code generation~.  These two stages will be
+discussed and implemented, respectively, in modules 4 and 5.
+
+~Syntax analysis~ - the subject of this module - consists of two
+sub-stages: ~lexical analysis~ (also called tokenizing), and ~parsing~.
+
+We'll begin by presenting the basic concepts underlying lexical
+analysis and parsing. This will set the stage to the rest of the
+module, in which we'll implement a tokenizer and parser for the Jack
+language. The result will be a ~Jack analyzer - a program that unveils
+the syntax of Jack programs without generating executable code.~
+
+In module 5, this Jack analyzer will be augmented with code generation
+capabilities, resulting in a full-scale compiler for the Jack
+language.
+
+Key concepts: tokenizing, grammars, parsing, parse trees, XML /
+mark-up, compilation.
+
+Relevant (and optional) reading: chapter 10 of The Elements of
+Computing Systems, by Nisan and Schocken, MIT Press.

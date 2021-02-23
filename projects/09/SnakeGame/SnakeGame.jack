@@ -1,17 +1,9 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// File name: projects/09/Square/SquareGame.jack
 
 /**
- * Implements the Square Dance game.
- * This simple game allows the user to move a black square around
- * the screen, and change the square's size during the movement.
- * When the game starts, a square of 30 by 30 pixels is shown at the
- * top-left corner of the screen. The user controls the square as follows.
- * The 4 arrow keys are used to move the square up, down, left, and right.
- * The 'z' and 'x' keys are used, respectively, to decrement and increment
- * the square's size. The 'q' key is used to quit the game.
+ * Implements the snake game.
+ * This simple game allows the user to move a snake around the screen,
+ * eat food and make the snake longer. and when the snake eats all the food,
+ * game will be over.
  */
 
 class SnakeGame {
@@ -19,23 +11,20 @@ class SnakeGame {
     field Food food;
     field int direction; // the square's current direction:
                         // 0=none, 1=up, 2=down, 3=left, 4=right
-
     field int gSpeed;
-    field int temp;
-    field int i;
-    field int tempX;
-    field int tempY;
-    field int tempCnt;
+    field Food food;
 
     field Array tempBody;
 
     /** Constructs a new Snake Game. */
-    constructor SnakeGame new(int sx, int sy, int squareSize, int maxLen, int gameSpeed) {
+    constructor SnakeGame new(int sx, int sy, int squareSize, int gameSpeed) {
         // Creates a 30 by 30 pixels square and positions it at the top-left
         // of the screen.
-        let snake = Snake.new(sx, sy, squareSize, maxLen);
-        let direction = 0;  // initial state is no movement
+        let snake = Snake.new(sx, sy, squareSize);
         let food = Food.new(squareSize, 3);
+        let direction = 0;  // initial state is no movement
+        // let food = Food.new(squareSize, 3);
+        let gSpeed = gameSpeed;
 
         return this;
     }
@@ -48,57 +37,61 @@ class SnakeGame {
     }
 
 
+    // check if the next location of the screen is empty
     method int isEmpty(int x, int y){
         // check if snake body is on the way
-        let tempX = snake.getSnakeHeadX();
-        let tempY = snake.getSnakeHeadY();
+        var Node node;
+        var Array curNodeData;
+        var int nextHeadX;
+        var int nextHeadY;
+        var int i;
+        var Array tempFood;
+        var int foodLen;
 
-        let i = 0;
-        let tempCnt = 0;
-        let temp = snake.getSnakeLength();
-        let tempBody = snake.getSnakeBody();
-        while(i < temp){
-            // check x & y
-            if (tempBody[i*2] = tempX+x){
-                if (tempBody[i*2+1] = tempY+y){
-                    // since we get the whole body and looping
-                    let tempCnt = tempCnt + 1;
-                    if(tempCnt = 2){
-                        return 2; // return 2 when it was the snake body
-                    }
+        let curNodeData = Array.new(2);
+        let node = snake.getHead();
+        let curNodeData = node.getData();
+        let nextHeadX = curNodeData[0] + x;
+        let nextHeadY = curNodeData[1] + y;
+
+        // check if the snake body is on the way
+        while(~(node = null)){
+            let curNodeData = node.getData();
+            if (curNodeData[0] = nextHeadX){
+                if (curNodeData[1] = nextHeadY){
+                    do Output.printString("game over");
+                    do Output.println();
+                    return -1;
                 }
             }
-            let i = i + 1;
+            let node = node.getNext();
         }
 
-
-        // check if it was food where the head is
         let i = 0;
-        let tempBody = food.getFoods();
-        let temp = food.getFoodLen();
+        let foodLen = food.getFoodLen();
+        let tempFood = Array.new(2*foodLen);
+        let tempFood = food.getFood();
 
-        while(i < temp){
-            if (tempBody[i*2] = tempX+x){
-                if (tempBody[i*2+1] = tempY+y){
+        // check if food is on the way
+        while(i < foodLen){
+            if (tempFood[i*2] = nextHeadX){
+                if (tempFood[i*2+1] = nextHeadY){
 
-                    do food.removeFood(i);
+                    // remove food from the screen: don't need to
+                    // do anything because snake will pass by and food
+                    // will be removed automatically.
 
+                    // replace the food data with the new one and
+                    // draw new food on the screen
+                    do food.drawFood(i);
 
-                    let temp = food.getFoodLen();
-                    do Output.printInt(temp);
-
-                    if(food.getFoodLen() = 0){
-                        do food.setFoods();
-                    }
-
-                    return 3; // return 3 when it was a food
+                    return 2; // return 3 when it was a food
                 }
             }
+
             let i = i+1;
         }
 
-
-        // return 1 when it's empty
         return 1;
     }
 
@@ -106,70 +99,48 @@ class SnakeGame {
 
     /** Moves the snake in the current direction. */
     method void moveSnake() {
+        var int whatsnext;
         if (direction = 1) {
-            let temp = isEmpty(0,-1);
-            if (temp = 1){
+            let whatsnext = isEmpty(0, -1);
+            // when the next pos is empty
+            if(whatsnext = 1){
                 do snake.moveUp();
-            } else {
-                if(temp = 2){
-                    // game over
-                    // do Output.printString("Game Over");
-                    // do snake.moveDown();
-                } else { // temp = 3
-                    do snake.getBigger(0, -1);
-                    do snake.moveUp();
-                }
+            }
+            // when the next pos is food
+            if(whatsnext = 2){
+                do snake.snake_addHeadUp();
             }
         }
         if (direction = 2) {
-            let temp = isEmpty(0,1);
-
-            if (temp = 1){
+            let whatsnext = isEmpty(0, 1);
+            if(whatsnext = 1){
                 do snake.moveDown();
-
-            } else {
-                if(temp = 2){
-                    // game over
-                    // do Output.printString("Game Over");
-                    // do snake.moveDown();
-                } else { // temp = 3
-                    do snake.getBigger(0, 1);
-                    do snake.moveDown();
-                }
+            }
+            if(whatsnext = 2){
+                do snake.snake_addHeadDown();
             }
         }
+
         if (direction = 3) {
-            let temp = isEmpty(-1,0);
-            if (temp = 1){
+            let whatsnext = isEmpty(-1, 0);
+            if(whatsnext = 1){
                 do snake.moveLeft();
-            } else {
-                if(temp = 2){
-                    // game over
-                    // do Output.printString("Game Over");
-                    // do snake.moveDown();
-                } else { // temp = 3
-                    do snake.getBigger(-1, 0);
-                    do snake.moveLeft();
-                }
+            }
+            if(whatsnext = 2){
+                do snake.snake_addHeadLeft();
             }
         }
         if (direction = 4) {
-
-            let temp = isEmpty(1,0);
-            if (temp = 1){
+            let whatsnext = isEmpty(1, 0);
+            if(whatsnext = 1){
                 do snake.moveRight();
-            } else {
-                if(temp = 2){
-                    // game over
-                    // do Output.printString("Game Over");
-                    // do snake.moveDown();
-                } else { // temp = 3
-                    do snake.getBigger(1, 0);
-                    do snake.moveRight();
-                }
+            }
+            if(whatsnext = 2){
+                do snake.snake_addHeadRight();
             }
         }
-        // do Sys.wait(gSpeed);  // delays the next movement
+
+        do Sys.wait(gSpeed);  // delays the next movement
         return;
     }
 
