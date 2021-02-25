@@ -12,6 +12,10 @@ Alan Turing:
     * program flow
     * function calling commands
 
+### project 9 : Snake game written in Jack
+
+### project 10 : Compiler 1: Syntax Analysis of Jack
+
 ####  Environment
 Python 3.8.5
 #### Running the tests
