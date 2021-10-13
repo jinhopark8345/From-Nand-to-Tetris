@@ -24,6 +24,7 @@ comp2bits = {
     'D-1': '0001110',
     'A-1': '0110010',
     'D+A': '0000010',
+    'A+D': '0000010',
     'D-A': '0010011',
     'A-D': '0000111',
     'D&A': '0000000',
@@ -34,6 +35,7 @@ comp2bits = {
     'M+1': '1110111',
     'M-1': '1110010',
     'D+M': '1000010',
+    'M+D': '1000010',
     'D-M': '1010011',
     'M-D': '1000111',
     'D&M': '1000000',
@@ -204,7 +206,8 @@ def main():
 
   print()
 
-  curfile = filelist[6]
+  # curfile = filelist[6]
+  curfile = "/home/jinho/Projects/study/From-Nand-to-Tetris/projects/08/ProgramFlow/BasicLoop/BasicLoop.asm"
 
   with open(curfile, 'r') as file:
 

@@ -4,7 +4,7 @@ note.org
 tools
 tools/
 
-__pycache__/
+*/__pycache__/
 .cache
 
 .pytest_cache/

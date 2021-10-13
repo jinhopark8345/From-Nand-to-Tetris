@@ -671,7 +671,6 @@ The third element which is really important, is if we're going to have to tell t
 
 ** Machine Languages: Elements
 
-
 #+DOWNLOADED: screenshot @ 2020-12-29 14:51:08
 #+ATTR_ORG: :width 600
 #+ATTR_LATEX: :width 5.5in
@@ -703,7 +702,7 @@ The smallest memories are going to be very easy to access. First of all, because
 
 And then, there is going to be slightly ~larger memories~, usually called ~cache~, and even larger memories, sometimes called the big, the main memory. And maybe even, even larger memories that are going to sit on disk.
 
-~At each time we get farther away from the arithmetic unit itself, our memory be, gets bigger.~ Accessing it becomes harder borth, both in terms of giving a larger, a wider address. And in terms of the time we need to wait until we get the value. But we have more information there. The ways that the different levels of the memory hierarchy are handled differs according to the different levels. But, what we're going to discuss now is the way that registers, the smallest, the smallest memory that usually resides really inside the CPU, and how we handle that. So eh, almost every CPU has a few, very small amount of memory registers that are located really inside the CPU. Their type and functionality's really part of the machine language. And the main point is that since there are so few of them, everything then requires very few bits, and getting the information of them is extremely quickly. They are built from the fastest technology available and it's, they are already inside the CPU, so there is no delay in getting in, any information from there.
+~At each time we get farther away from the arithmetic unit itself, our memory be, gets bigger.~ Accessing it becomes harder both in terms of giving a larger, a wider address. And in terms of the time we need to wait until we get the value. But we have more information there. The ways that the different levels of the memory hierarchy are handled differs according to the different levels. But, what we're going to discuss now is the way that registers, the smallest, the smallest memory that usually resides really inside the CPU, and how we handle that. So almost every CPU has a few, very small amount of memory registers that are located really inside the CPU. Their type and functionality's really part of the machine language. And the main point is that since there are so few of them, everything then requires very few bits, and getting the information of them is extremely quickly. They are built from the fastest technology available and it's, they are already inside the CPU, so there is no delay in getting in, any information from there.
 
 *** Registers
 
@@ -759,7 +758,7 @@ And then, there is going to be slightly ~larger memories~, usually called ~cache
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#4_-_Machine_Language/2020-12-29_16-50-15_screenshot.png]]
 
-So we do have a ~reset button~ and here is how I cause this computer to do something useful for me. I write the program, the program is a set of 16 bit numbers. I take these uh,16 bit numbers and somehow put them into the ROM. We'll discuss later, how we actually do it then ~I press the reset button. And once I do this the program starts running.~ That's, that's the basic sort of user instructions of how to to cause this computer to do something useful. Now, I have no idea what this, what the computer will do it all depends on the program, you know. But hopefully the computer will start sounding some music or showing a video clip or compute the average of a million numbers or something like this. It all depends on what is written in the program.
+So we do have a ~reset button~ and here is how I cause this computer to do something useful for me. I write the program, the program is a set of 16 bit numbers. I take these uh,16 bit numbers and somehow put them into the ROM. We'll discuss later, how we actually do it then ~I press the reset button. And once I do this the program starts running.~ That's the basic sort of user instructions of how to to cause this computer to do something useful. Now, I have no idea what this, what the computer will do it all depends on the program, you know. But hopefully the computer will start sounding some music or showing a video clip or compute the average of a million numbers or something like this. It all depends on what is written in the program.
 
 *** Registers
 
@@ -768,7 +767,7 @@ So we do have a ~reset button~ and here is how I cause this computer to do somet
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#4_-_Machine_Language/2020-12-29_17-54-42_screenshot.png]]
 
-First of all, there's the ~D register~ which ~holds a 16 bite value which represents a piece of data~. Then there's the ~A register~ which ~holds also a 16 bit value which represents either a data value or an address~. We'll talk about this later on. And finally, there is something called the selected ~memory register~ which is denoted by the ~letter M~. So it doesn't matter if I have 2 billion memory registers. At any given point of time, ~only one of them is selected and I can basically ignore all the other registers.~ They, they're irrelevant for what I currently do, ~I want to focus only on the currently selected register and I call this register M.~ You know, the, this is just a convention that we use in the specification of the hack machine language.
+First of all, there's the ~D register~ which ~holds a 16 bite value which represents a piece of data~. Then there's the ~A register~ which ~holds also a 16 bit value which represents either a data value or an address~. We'll talk about this later on. And finally, there is something called the selected ~memory register~ which is denoted by the ~letter M~. So it doesn't matter if I have 2 billion memory registers. At any given point of time, ~only one of them is selected and I can basically ignore all the other registers.~ They're irrelevant for what I currently do, ~I want to focus only on the currently selected register and I call this register M.~ You know, the, this is just a convention that we use in the specification of the hack machine language.
 
 A : Address register, pointing memory register's address
 D : data register, you can store data here
@@ -861,15 +860,106 @@ dest, comp, jump
 [[file:/home/jinho/Dropbox/org/pictures/Module#4_-_Machine_Language/2020-12-29_20-43-33_screenshot.png]]
 (left image: one row = 16(bit) * 32(lines) = 512 bits => display height)
 
-So, we'll do some of this today and we'll do some more fancy input/output operations, some much more fancy operations in the second part of this course, as I explained as I explained earlier.
+So, we'll do some of this today and we'll do some more fancy
+input/output operations, some much more fancy operations in the second
+part of this course, as I explained as I explained earlier.
 
-All right. So let's delve into the the screen memory map. Now, this is how we are used to think about display units. But as far as the hack computer is concerned, the display unit is the following obstruction. It's a ~table, or a matrix, consisting of 256 rows and 512 columns.~ And in each intersection of a, a row and a column, we have what is known as a ~pixel~. This is a black and white screen, so we can either turn the pixel on or we can turn it off. This is the physical display on it that the hack computer assumes. Now how do we control it? Well, as I just explained, we have something called a memory map. ~And the memory map is a sequence of 16-bit values~. ~Every one of these values is sometimes called a word~. So we have altogether, ~8k, 16-bit words.~ Why do we have 8k, 16-bit words? Because it turns out that ~8k times 16 gives something like 13,000 and something~, and this is the number of pixels that we have on the physical display unit. So, for every pixel on the physical display unit, we have a bit that represents this pixel in the screen memory map. And if I want to turn on this pixel, I put one in this bit. If I want to turn it off, I put zero in this bit.
+All right. So let's delve into the the screen memory map. Now, this is
+how we are used to think about display units. But as far as the hack
+computer is concerned, the display unit is the following
+obstruction. It's a ~table, or a matrix, consisting of 256 rows and
+512 columns.~ And in each intersection of a, a row and a column, we
+have what is known as a ~pixel~. This is a black and white screen, so
+we can either turn the pixel on or we can turn it off. This is the
+physical display on it that the hack computer assumes. Now how do we
+control it? Well, as I just explained, we have something called a
+memory map. ~And the memory map is a sequence of 16-bit
+values~. ~Every one of these values is sometimes called a word~. So we
+have altogether, ~8k, 16-bit words.~ Why do we have 8k, 16-bit words?
+Because it turns out that ~8k times 16 gives something like 13,000 and
+something~, and this is the number of pixels that we have on the
+physical display unit. So, for every pixel on the physical display
+unit, we have a bit that represents this pixel in the screen memory
+map. And if I want to turn on this pixel, I put one in this bit. If I
+want to turn it off, I put zero in this bit.
 
-So, in order to understand and, and control these bits judiciously, I have to come up with some ~mapping that describes exactly which bit corresponds to which pixel~.
+So, in order to understand and, and control these bits judiciously, I
+have to come up with some ~mapping that describes exactly which bit
+corresponds to which pixel~.
 
-Now this is a little but involved because on the right-hand side, I have a two-dimensional obstruction. And on the left-hand side, I have a one-dimensional obstruction, and I somehow have to connect the two. So how do we do it? Well, first of all, you should notice, and I'd like to re-emphasize the fact that when we access memory, ~we can only retrieve 16 bits in one chunk~. You know, we cannot access individual bits. If I want to access an individual bit, I have to figure out, first of all, ~in which word this bit resides~, so to speak.
+Now this is a little but involved because on the right-hand side, I
+have a two-dimensional obstruction. And on the left-hand side, I have
+a one-dimensional obstruction, and I somehow have to connect the
+two. So how do we do it? Well, first of all, you should notice, and
+I'd like to re-emphasize the fact that when we access memory, ~we can
+only retrieve 16 bits in one chunk~. You know, we cannot access
+individual bits. If I want to access an individual bit, I have to
+figure out, first of all, ~in which word this bit resides~, so to
+speak.
 
-And then I have to retrieve the entire word, do something to this value. And, you know, manipulate this particular bit and then I have to take this value and put it back, write it back into memory. So the read/write operations are always 16-bit operations. So I take the 16-bit out, manipulate something and put it back. All right? So what is the mapping? Well, here it is. ~The first 32 words in the in the memory map.~ Correspond to the first row in the display on it. Okay? So the first pixel that we see here and actually you can see it in the picture. We see that the picture begins with the four black pixels and indeed, we see four ones at the top of the memory. Then we have zero, one, zero, one. White, black, white, black and so on and so forth. Okay? So that's row zero, then we have row one, all the way down to row 255. Okay. So this is the first mapping that we have to to bear in mind. Now suppose that I want to manipulate a certain pixel on the screen and pixels on the screen are characterized by a row and a column. How do I map this row-column pair on the right register in the memory map? Well, here is how I do it. Well, first of all, I multiply row by 32 and then I compute column divided by 16. And this by the way is integer division. Namely, I throw away the remainder of the division. So for example, if column equals 18, then 18 divided by 16 is 1. So, I take the result of this integer, integer division. I add it up to 32 times row and this gives me the address of the register that they have to manipulate in the respective memory map. Now notice the word screen. Well, what does screen means here? Well, in the hack architecture and in this course, we are going to implement the screen memory map using a chip called Screen. So we're going to have an 8k chip called Screen, which behaves exactly as a memory unit. You know, we can, you can retrieve data from it, you can write data into it and this chip will, will serve as our memory map. However, when we build the overall computer, this chip is going to be part of the data memory. So the data memory or the RAM will consist of several chips and the screen will be one of them. You know, that's exactly how we described it before. We said that the memory map is part of the data memory. But notice that once you take this Screen chip and put it in a larger memory context, the base address of the memory map changes. So, if I access the Screen chip, I use the address that you see here. But if I access the overall RAM, I have to take this relative address and add to it the base address of the memory of the memory map in in the overall memory, which happens to be 16384. So this is just a technical detail. You know, if you want to write to the screen using the screen chip directly, use the first meth, the first algebraic expression. And if you want to if you are told that the Screen is part of a larger memory, you have to add up. The the base address. All right. So we have this 16-bit word and ~then we want to manipulate a particular bit inside it, which bit is it?~ Well it turns out that this bit is the ~column modular 16~. It's the remainder which remains after we divide column by 16. So we get the number, which is between zero and fifteen, we manipulate this bit, we, we turn it to zero or to one. We take the resulting value and we write it back into the RAM. Okay? That's the, if we won't do it, we won't achieve anything. Right? We have to somehow write it back into the memory map and in the next refresh, refresh cycle. What we just did is going to change the pixel in the in the outside display. I guess that some of you are kind of shocked at how much work it takes to to turn on, on and on, on or off one, one pixel, but that's it. That's, that's the reality. You know, if you work in a very low level in the level of bits that's what you have to do in order to control the screen. Now, I didn't work out all the algebra. You know, this is something that you can do on your own. It's it will take a few minutes if you want. But you can just, you know, take a example. Let's say that you want to change bit the bit in the fourth row and in column number 55. You know, workout the numbers and convince yourself that you are going to access the right bit in the memory.
+And then I have to retrieve the entire word, do something to this
+value. And, you know, manipulate this particular bit and then I have
+to take this value and put it back, write it back into memory. So the
+read/write operations are always 16-bit operations. So I take the
+16-bit out, manipulate something and put it back. All right? So what
+is the mapping? Well, here it is. ~The first 32 words in the in the
+memory map.~ Correspond to the first row in the display on it. Okay?
+So the first pixel that we see here and actually you can see it in the
+picture. We see that the picture begins with the four black pixels and
+indeed, we see four ones at the top of the memory. Then we have zero,
+one, zero, one. White, black, white, black and so on and so
+forth. Okay? So that's row zero, then we have row one, all the way
+down to row 255. Okay. So this is the first mapping that we have to to
+bear in mind. Now suppose that I want to manipulate a certain pixel on
+the screen and pixels on the screen are characterized by a row and a
+column. How do I map this row-column pair on the right register in the
+memory map? Well, here is how I do it. Well, first of all, I multiply
+row by 32 and then I compute column divided by 16. And this by the way
+is integer division. Namely, I throw away the remainder of the
+division. So for example, if column equals 18, then 18 divided by 16
+is 1. So, I take the result of this integer, integer division. I add
+it up to 32 times row and this gives me the address of the register
+that they have to manipulate in the respective memory map. Now notice
+the word screen. Well, what does screen means here? Well, in the hack
+architecture and in this course, we are going to implement the screen
+memory map using a chip called Screen. So we're going to have an 8k
+chip called Screen, which behaves exactly as a memory unit. You know,
+we can, you can retrieve data from it, you can write data into it and
+this chip will, will serve as our memory map. However, when we build
+the overall computer, this chip is going to be part of the data
+memory. So the data memory or the RAM will consist of several chips
+and the screen will be one of them. You know, that's exactly how we
+described it before. We said that the memory map is part of the data
+memory. But notice that once you take this Screen chip and put it in a
+larger memory context, the base address of the memory map changes. So,
+if I access the Screen chip, I use the address that you see here. But
+if I access the overall RAM, I have to take this relative address and
+add to it the base address of the memory of the memory map in in the
+overall memory, which happens to be 16384. So this is just a technical
+detail. You know, if you want to write to the screen using the screen
+chip directly, use the first meth, the first algebraic expression. And
+if you want to if you are told that the Screen is part of a larger
+memory, you have to add up. The the base address. All right. So we
+have this 16-bit word and ~then we want to manipulate a particular bit
+inside it, which bit is it?~ Well it turns out that this bit is the
+~column modular 16~. It's the remainder which remains after we divide
+column by 16. So we get the number, which is between zero and fifteen,
+we manipulate this bit, we, we turn it to zero or to one. We take the
+resulting value and we write it back into the RAM. Okay? That's the,
+if we won't do it, we won't achieve anything. Right? We have to
+somehow write it back into the memory map and in the next refresh,
+refresh cycle. What we just did is going to change the pixel in the in
+the outside display. I guess that some of you are kind of shocked at
+how much work it takes to to turn on, on and on, on or off one, one
+pixel, but that's it. That's, that's the reality. You know, if you
+work in a very low level in the level of bits that's what you have to
+do in order to control the screen. Now, I didn't work out all the
+algebra. You know, this is something that you can do on your own. It's
+it will take a few minutes if you want. But you can just, you know,
+take a example. Let's say that you want to change bit the bit in the
+fourth row and in column number 55. You know, workout the numbers and
+convince yourself that you are going to access the right bit in the
+memory.
 
 #+DOWNLOADED: screenshot @ 2020-12-29 20:45:15
 #+ATTR_ORG: :width 600
@@ -919,9 +1009,9 @@ And then I have to retrieve the entire word, do something to this value. And, yo
 
 
 Those of you familiar with the notion of Unicode or ASCII can make the connection between these notions and in what we do here.
-It's essentially the very same very same idea. And by the way, when you don't touch the keyboard, when, when nothing when the keyboard is idle, the number that we see in the memory map is 0. So, that's how we can tell if a keyboard is actually being used. The memory map once again, is this 16-bit register. And, if you want to check if which key is currently pressed, all we have to do is probe the contents of the keyboard chip.
+It's essentially the very same very same idea. And by the way, when you don't touch the keyboard, when the keyboard is idle, the number that we see in the memory map is 0. So, that's how we can tell if a keyboard is actually being used. The memory map once again, is this 16-bit register. And, if you want to check if which key is currently pressed, all we have to do is probe the contents of the keyboard chip.
 
-In the Hack computer we probe the contents of RAM in address 24576. Because, this is where the keyboard memory map, memory map happens to reside.
+In the Hack computer we probe the contents of RAM in address 24576. Because, this is where the keyboard memory map happens to reside.
 
 **** Handling the keyboard input in the hack platform
 
@@ -1007,7 +1097,34 @@ problem: program doesn't end
 
 NOP attack: Null instructions or Null Opcodes
 
-If I were a bad hacker and I would have seen this pattern of execution I would say, well maybe I can ~write some malicious program and put it somewhere downstream in this memory.~ And then I would let the user run his or her program naively. The user will happily run his program. The program will actually do What it's supposed to do. But then, ~unknowingly, the computer will continue executing and then, boom.~ My program will go to work and will start to do some bad things like deleting random files on the user's computer. So, what can we do In order to avoid this potential program. By the way this particular attack is called the ~NOP slide(sled)~ and NOP stands for Null instructions or Null Opcodes and what we have here in instructions six onward are Null instructions and a bed hacker can use this instructions to slide the flow of control to an area of the memory that he controls and then something bad can happen. What can we do to avert this problem? And in general, ~what can we do to terminate the program properly?~ well one thing that you have to understand is ~that computers never stand still.~ They always do something even when you don't touch the keyboard. There are many processes running in the background. ~So, in the hacked computer, because we don't want the computer to do something crazy.~ We might as well cause the computer to do something that we control. ~So what we can do is we can end the program with an infinite loop.~ We can end two commands like @six and then in seven jumped to six so we have once again @six and then in seven jumped to six, jump six, jump six and so on. ~And we have this infinite loop and everything is under control because this is something that we intended our program to do.~ So, as the best practice advice, we recommend that you end everyone of your program with the infinite loop.
+If I were a bad hacker and I would have seen this pattern of execution
+I would say, well maybe I can ~write some malicious program and put it
+somewhere downstream in this memory.~ And then I would let the user
+run his or her program naively. The user will happily run his
+program. The program will actually do What it's supposed to do. But
+then, ~unknowingly, the computer will continue executing and then,
+boom.~ My program will go to work and will start to do some bad things
+like deleting random files on the user's computer. So, what can we do
+in order to avoid this potential program. By the way this particular
+attack is called the ~NOP slide(sled)~ and NOP stands for Null
+instructions or Null Opcodes and what we have here in instructions six
+onward are Null instructions and a bad hacker can use this
+instructions to slide the flow of control to an area of the memory
+that he controls and then something bad can happen. What can we do to
+avert this problem? And in general, ~what can we do to terminate the
+program properly?~ well one thing that you have to understand is ~that
+computers never stand still.~ They always do something even when you
+don't touch the keyboard. There are many processes running in the
+background. ~So, in the hacked computer, because we don't want the
+computer to do something crazy.~ We might as well cause the computer
+to do something that we control. ~So what we can do is we can end the
+program with an infinite loop.~ We can end two commands like @six and
+then in seven jumped to six so we have once again @six and then in
+seven jumped to six, jump six, jump six and so on. ~And we have this
+infinite loop and everything is under control because this is
+something that we intended our program to do.~ So, as the best
+practice advice, we recommend that you end everyone of your program
+with the infinite loop.
 
 #+DOWNLOADED: screenshot @ 2020-12-29 23:00:43
 #+ATTR_ORG: :width 600
@@ -1068,9 +1185,6 @@ reference: @POSITIVE, @END
 #+ATTR_ORG: :width 400
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#4_-_Machine_Language/2020-12-29_23-39-29_screenshot.png]]
-
-don't understand
-isn't it should be NOR_EQUAL_TO_0 ?
 
 *** Variables
 
@@ -1414,7 +1528,7 @@ op-code : 0 = A-instruction
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#5_-_Computer_Architecture/2020-12-30_17-14-33_screenshot.png]]
 
- CPU designer has to take these six green bits or more accurately copies of these bits and root them all the way to the control bits of the ALU
+CPU designer has to take these six green bits or more accurately copies of these bits and root them all the way to the control bits of the ALU
 
 ***** ALU operation: Outputs
 
@@ -2127,7 +2241,7 @@ Well, we have to strike a ~balance~ between two conflicting objectives. On the o
 
 #+DOWNLOADED: screenshot @ 2021-01-04 18:35:06
 #+ATTR_ORG: :width 600
-#+ATTR_LATEX: :width 5.5in
++ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#7-_virtual_machine_overview/2021-01-04_18-35-06_screenshot.png]]
 *** arithmetic commands
 
@@ -2216,7 +2330,7 @@ push argument 1
 pop static 2
 #+end_src
 
-In order to move the value of argument 1 to static 2, we ~must go through the stack~. That's the only way to do it in a stack machine, so ~we push argument 1 onto the stack~. And then ~we pop the topmost value~, the value that we have just added onto static 2. ~And because these two commands kind of cancel each other stackwise, we see that the stack remained the same~. A lot of drama happened, right? We added something, we took something away from the stack. But at the ~end of the game, the stack is intact.~ And we ~managed to move something from one segment to the other.~ And that's the ~only way~ to move values from one segment to another in our VM abstruction.
+In order to move the value of argument 1 to static 2, we ~must go through the stack~. That's the only way to do it in a stack machine, so ~we push argument 1 onto the stack~. And then ~we pop the topmost value~, the value that we have just added onto static 2. ~And because these two commands kind of cancel each other stackwise, we see that the stack remained the same~. A lot of drama happened, right? We added something, we took something away from the stack. But at the ~end of the game, the stack is intact.~ And we ~managed to move something from one segment to the other.~ And that's the ~only way~ to move values from one segment to another in our VM abstraction.
 
 ** VM implementation: the stack
 *** Pointer manipulation
@@ -2346,6 +2460,11 @@ admit that this segment and the way we use it and realize it may sound somewhat 
 #+ATTR_ORG: :width 400
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#7-_virtual_machine_overview/2021-01-04_22-37-41_screenshot.png]]
+
+1. push constant 1000 : now stack has 1000 on top
+2. pop pointer 0 : pop 1000 from the top of the stack, and push that 1000 into pointer 0(this)
+3. push constant 2000 : now stack has 2000 on top
+2. pop pointer 1 : pop 2000 from the top of the stack, and push that 2000 into pointer 1(that)
 
 *** VM language
 
@@ -2565,7 +2684,7 @@ Now, if the whole thing sounds to you quite similar to P-code, then you're absol
 
 So the basic idea, which still prevails is that a Java compiler first generates bytecode and this bytecode can be deployed through the Internet to any connected device
 
-and once it reaches it's destination there will be a client site JVN or a VM implementation that executes the code on the client device. How? By translating the VM code into the devices machine language just like we did with our own VM translator.
+and once it reaches it's destination there will be a client site JVM or a VM implementation that executes the code on the client device. How? By translating the VM code into the devices machine language just like we did with our own VM translator.
 
 Now, going back to the mid 90s, ~it turns out that historically, these lofty ideas of Sun were ahead of their time. And the beginning of Java was somewhat sluggish. But then, something completely unexpected happened. The cell phone happened. And before you could say iPhone, or Samsung, the world was flooded by numerous cellphone models using dozens of different processors, chipsets and operating systems. So all of a sudden the pre-sync Java Vision of running the same software on many different devices became extremely relevant~
 
@@ -2948,7 +3067,6 @@ last two min
 [[file:/home/jinho/Dropbox/org/pictures/Module#8-_Virtual_Machine_2:_Program_Control/2021-02-06_16-47-22_screenshot.png]]
 
 ** VM Implementation oh the Hack platform
-
 *** The big picture: program compilation and translation
 
 #+DOWNLOADED: screenshot @ 2021-02-06 17:46:04
@@ -3114,21 +3232,18 @@ need to make FibonacciElement.asm file(same as dir name)
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-10-35_screenshot.png]]
 
 *** Take home lessons
-
 #+DOWNLOADED: screenshot @ 2021-02-13 00:11:27
 #+ATTR_ORG: :width 400
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-11-27_screenshot.png]]
 
 *** Hello World
-
 #+DOWNLOADED: screenshot @ 2021-02-13 00:13:02
 #+ATTR_ORG: :width 600
 #+ATTR_LATEX: :width 5.5in
 [[file:/home/jinho/Dropbox/org/pictures/Module#9_-_High_Level_Language/2021-02-13_00-13-02_screenshot.png]]
 
 *** Procedural processing
-
 #+DOWNLOADED: screenshot @ 2021-02-13 00:14:03
 #+ATTR_ORG: :width 700
 #+ATTR_LATEX: :width 5.5in

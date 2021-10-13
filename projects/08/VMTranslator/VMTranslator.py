@@ -89,11 +89,11 @@ def translate_file(input_path, debug_flag=False):
 def translate(input_path, debug_flag=False):
 
     if os.path.isdir(input_path):
-        print("\tinput is a dir")
+        # print("\tinput is a dir")
         translate_dir(input_path, debug_flag)
 
     elif os.path.isfile(input_path):
-        print("\tinput is a file")
+        # print("\tinput is a file")
         translate_file(input_path, debug_flag)
 
     else:
